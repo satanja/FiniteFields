@@ -48,5 +48,14 @@ public class Input {
         }
 
         System.out.println("Operation: [" + operation + "]");
+
+        switch (operation) {
+            case "abc":
+                System.out.println("Do abc");
+                break;
+            case "def":
+                System.out.println("Do def");
+                break;
+        }
     }
 }
