@@ -58,4 +58,16 @@ public class Input {
                 break;
         }
     }
+
+    private void readZmodP() {
+        // Implement this
+    }
+
+    private void readPolynomial() {
+        // Implement this
+    }
+
+    private void readField() {
+        // Implement this
+    }
 }
