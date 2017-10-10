@@ -1,19 +1,125 @@
+/*
+ * An immutable value object for objects in Z mod p.
+ */
 public class ZmodP {
 
     private int p;
+    private int value;
     private int[] classes;
 
-    public ZmodP(int k) {
-
-        if (isPrime(k)) {
-            this.p = k;
-            ConstructClasses();
+    public ZmodP(int value, int p) {
+        if (! isPrime(p)) {
+            throw new IllegalArgumentException("p should be prime");
+        }
+        if (value >= p || value < 0) {
+            value = value % p;
         }
 
+        this.p = p;
+        this.value = value;
     }
 
+    public int getP() {
+        return p;
+    }
 
-    private boolean isPrime(int k) {
+    public int getValue() {
+        return value;
+    }
+
+    /**
+     * Adds the value of two ZmodP objects.
+     *
+     * @param b The value to be added to the value of {@code this}.
+     * @return A new ZmodP object with the combined value of {@code this} and {@code b}.
+     */
+    public ZmodP add(ZmodP b) {
+        if (b.getP() != getP()) {
+            throw new IllegalArgumentException("p value should be equal");
+        }
+
+        int newValue = getValue() + b.getValue();
+
+        if (newValue >= p) {
+            newValue -= p;
+        }
+
+        return new ZmodP(newValue, p);
+    }
+
+    /**
+     * Subtracts the value of two ZmodP objects.
+     *
+     * @param b The value to be subtracted from the value of {@code this}.
+     * @return A new ZmodP object with the value of {@code b} subtracted from the value of {@code this}.
+     */
+    public ZmodP sub(ZmodP b) {
+        if (b.getP() != getP()) {
+            throw new IllegalArgumentException("p value should be equal");
+        }
+
+        int newValue = getValue() + b.getValue();
+
+        if (newValue < 0) {
+            newValue += p;
+        }
+
+        return new ZmodP(newValue, p);
+    }
+
+    public ZmodP multiply(ZmodP b) {
+        if (b.getP() != getP()) {
+            throw new IllegalArgumentException("p value should be equal");
+        }
+
+        int newValue = (getValue() * b.getValue()) % p; // @todo Replace with a more efficient method.
+
+        return new ZmodP(newValue, p);
+    }
+
+    public ZmodP div(ZmodP b) {
+        if (b.getP() != getP()) {
+            throw new IllegalArgumentException("p value should be equal");
+        }
+
+        int newValue = getValue() / b.getValue(); // @todo Replace with a more efficient method.
+
+        return new ZmodP(newValue, p);
+    }
+
+    public ZmodP remainder(ZmodP b) {
+        if (b.getP() != getP()) {
+            throw new IllegalArgumentException("p value should be equal");
+        }
+
+        int newValue = getValue() % b.getValue(); // @todo Replace with a more efficient method.
+
+        return new ZmodP(newValue, p);
+    }
+
+    /**
+     * Checks if n is prime.
+     *
+     * @param n The value to be checked.
+     * @return True if n is prime, else false.
+     */
+    private boolean isPrime(int n) {
+        if (n <= 1) {
+            return false;
+        } else if (n <= 3) {
+            return true;
+        } else if (n % 2 == 0 || n % 3 == 0) {
+            return false;
+        }
+
+        int i = 5;
+        while (i * i <= n) {
+            if (n % i == 0 || n % (i + 2) == 0) {
+                return false;
+            }
+
+            i += 6;
+        }
 
         return true;
     }
@@ -24,9 +130,5 @@ public class ZmodP {
         for (int i = 0; i < classes.length; i++) {
             classes[i] = i;
         }
-    }
-
-    public int mod(int num){
-        return num%p;
     }
 }
