@@ -3,15 +3,15 @@
  */
 public class Monomial {
 
-    private  int coefficient;
+    private  ZmodP coefficient;
     private  int exponent;
 
-    public Monomial(int c, int e) {
+    public Monomial(ZmodP c, int e) {
         coefficient = c;
         exponent = e;
     }
 
-    public int getCoefficient() {
+    public ZmodP getCoefficient() {
         return coefficient;
     }
 

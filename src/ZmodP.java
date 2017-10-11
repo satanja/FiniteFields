@@ -67,6 +67,7 @@ public class ZmodP {
         return new ZmodP(newValue, p);
     }
 
+    //TODO: Contract
     public ZmodP multiply(ZmodP b) {
         if (b.getP() != getP()) {
             throw new IllegalArgumentException("p value should be equal");
@@ -77,6 +78,7 @@ public class ZmodP {
         return new ZmodP(newValue, p);
     }
 
+    //TODO: Contract
     public ZmodP div(ZmodP b) {
         if (b.getP() != getP()) {
             throw new IllegalArgumentException("p value should be equal");
@@ -87,6 +89,7 @@ public class ZmodP {
         return new ZmodP(newValue, p);
     }
 
+    //TODO: Contract
     public ZmodP remainder(ZmodP b) {
         if (b.getP() != getP()) {
             throw new IllegalArgumentException("p value should be equal");
@@ -95,6 +98,26 @@ public class ZmodP {
         int newValue = getValue() % b.getValue(); // @todo Replace with a more efficient method.
 
         return new ZmodP(newValue, p);
+    }
+
+    //TODO: Contract
+    public boolean equals(ZmodP b) {
+
+        boolean answer = false;
+
+        if(b.getP() == p) {
+            //same prime
+
+            int diff = value - b.getValue();
+            if(diff % p == 0) {
+                //value - b.getValue() is a multiple of p =>
+                //value is congruent with b.getValue() =>
+                //b.getValue() is in the same class as value, and so they are equal
+                answer = true;
+            }
+        }
+
+        return answer;
     }
 
     /**
