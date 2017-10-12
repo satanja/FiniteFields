@@ -1,6 +1,5 @@
 import Input.Input;
-import Input.Operations.AddZmodP;
-import Input.Operations.SubZmodP;
+import Input.Operations.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,9 +39,15 @@ public class Main {
         }
 
         Input input = new Input(scanner);
+
+        // Add all the supported operations.
         input
             .addOperation(new AddZmodP(input))
-            .addOperation(new SubZmodP(input));
+            .addOperation(new SubZmodP(input))
+            .addOperation(new MultiplyZmodP(input))
+            .addOperation(new RemainderZmodP(input))
+            .addOperation(new DivZmodP(input));
+
         input.read();
     }
 
