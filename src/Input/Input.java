@@ -1,3 +1,7 @@
+package Input;
+
+import Values.ZmodP;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -6,7 +10,7 @@ import java.util.regex.Pattern;
 public class Input {
 
     private Scanner scanner;
-    private String[] supportedOperations = {"abc", "def", "mul"};
+    private String[] supportedOperations = {"add", "sub", "mul", "div", "remainder"};
     final private String inputPrefix = " < ";
     final private String outputPrefix = " > ";
 
@@ -57,26 +61,52 @@ public class Input {
     }
 
     private void executeOperation(String operation) {
-        switch (operation) {
-            case "abc":
+        ZmodP a;
+        ZmodP b;
 
-                System.out.println("Do abc");
+        switch (operation) {
+            case "add":
+                System.out.println(outputPrefix + "Expects two Values.ZmodP objects a and b as input with equal p.");
+                System.out.println(outputPrefix + "Returns a Values.ZmodP value object with value (a + b) mod p");
+
+                a = readZmodP("a");
+                b = readZmodP("b");
+
+                try {
+                    ZmodP result = a.add(b);
+                    System.out.println(outputPrefix + result.toString());
+                } catch (IllegalArgumentException e) {
+                    System.out.println(outputPrefix + "FAILED: The p values of both Values.ZmodP objects should be equal.");
+                }
+
                 break;
-            case "def":
-                System.out.println("Do def");
+            case "sub":
+                System.out.println(outputPrefix + "Expects two Values.ZmodP objects a and b as input with equal p.");
+                System.out.println(outputPrefix + "Returns a Values.ZmodP value object with value (a - b) mod p");
+
+                a = readZmodP("a");
+                b = readZmodP("b");
+
+                try {
+                    ZmodP result = a.sub(b);
+                    System.out.println(outputPrefix + result.toString());
+                } catch (IllegalArgumentException e) {
+                    System.out.println(outputPrefix + "FAILED: The p values of both Values.ZmodP objects should be equal.");
+                }
+
                 break;
             case "mul":
-                System.out.println(outputPrefix + "Expects two ZmodP objects a and b as input with equal p.");
-                System.out.println(outputPrefix + "Returns a ZmodP value object with value (a * b) mod p");
+                System.out.println(outputPrefix + "Expects two Values.ZmodP objects a and b as input with equal p.");
+                System.out.println(outputPrefix + "Returns a Values.ZmodP value object with value (a * b) mod p");
 
-                ZmodP a = readZmodP("a");
-                ZmodP b = readZmodP("b");
+                a = readZmodP("a");
+                b = readZmodP("b");
 
                 try {
                     ZmodP result = a.multiply(b);
                     System.out.println(outputPrefix + result.toString());
                 } catch (IllegalArgumentException e) {
-                    System.out.println(outputPrefix + "FAILED: The p values of both ZmodP objects should be equal.");
+                    System.out.println(outputPrefix + "FAILED: The p values of both Values.ZmodP objects should be equal.");
                 }
 
                 break;
@@ -84,7 +114,7 @@ public class Input {
     }
 
     private ZmodP readZmodP(String name) {
-        System.out.println(inputPrefix + "[" + name + "] Please enter a ZmodP value in the format 'Z mod P' with Z an integer and P a prime.");
+        System.out.println(inputPrefix + "[" + name + "] Please enter a Values.ZmodP value in the format 'Z mod P' with Z an integer and P a prime.");
 
         Pattern pattern = Pattern.compile("[ 0]*([1-9]\\d*) *[mod]{1,3} *[ 0]*([1-9]\\d*)");
 
