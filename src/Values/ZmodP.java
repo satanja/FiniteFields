@@ -1,5 +1,8 @@
 package Values;
 
+import Values.Exceptions.PNotPrimeException;
+import Values.Exceptions.PValuesNotEqualException;
+
 /*
  * An immutable value object for objects in Z mod p.
  */
@@ -11,7 +14,7 @@ public class ZmodP {
 
     public ZmodP(int value, int p) {
         if (! isPrime(p)) {
-            throw new IllegalArgumentException("p should be prime");
+            throw new PNotPrimeException("p should be prime");
         }
         if (value >= p || value < 0) {
             value = value % p;
@@ -37,7 +40,7 @@ public class ZmodP {
      */
     public ZmodP add(ZmodP b) {
         if (b.getP() != getP()) {
-            throw new IllegalArgumentException("p value should be equal");
+            throw new PValuesNotEqualException("p value should be equal");
         }
 
         int newValue = getValue() + b.getValue();
@@ -57,7 +60,7 @@ public class ZmodP {
      */
     public ZmodP sub(ZmodP b) {
         if (b.getP() != getP()) {
-            throw new IllegalArgumentException("p value should be equal");
+            throw new PValuesNotEqualException("p value should be equal");
         }
 
         int newValue = getValue() + b.getValue();
@@ -72,7 +75,7 @@ public class ZmodP {
     //TODO: Contract
     public ZmodP multiply(ZmodP b) {
         if (b.getP() != getP()) {
-            throw new IllegalArgumentException("p value should be equal");
+            throw new PValuesNotEqualException("p value should be equal");
         }
 
         int newValue = (getValue() * b.getValue()) % p; // @todo Replace with a more efficient method.
@@ -83,7 +86,7 @@ public class ZmodP {
     //TODO: Contract
     public ZmodP div(ZmodP b) {
         if (b.getP() != getP()) {
-            throw new IllegalArgumentException("p value should be equal");
+            throw new PValuesNotEqualException("p value should be equal");
         }
 
         int newValue = getValue() / b.getValue(); // @todo Replace with a more efficient method.
@@ -94,7 +97,7 @@ public class ZmodP {
     //TODO: Contract
     public ZmodP remainder(ZmodP b) {
         if (b.getP() != getP()) {
-            throw new IllegalArgumentException("p value should be equal");
+            throw new PValuesNotEqualException("p value should be equal");
         }
 
         int newValue = getValue() % b.getValue(); // @todo Replace with a more efficient method.
