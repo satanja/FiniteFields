@@ -43,6 +43,7 @@ public class Polynomial  {
 
         List<Monomial> monomialsListh = new ArrayList<Monomial>();
 
+        //Add monomials to this if they do not exist
         for(Monomial mg : monomialsg) {
             if(!this.hasExponent(mg)){
                 monomialsListh.add(new Monomial(new ZmodP(0,mg.getCoefficient().getP()),mg.getExponent()));
@@ -173,8 +174,16 @@ public class Polynomial  {
         }
     }
 
+    /**
+     *
+     * @param b
+     * @return
+     * @throws IllegalArgumentException if {@code this.getField().getP() == b.getField().getP()}
+     */
     public QuotientAndRemainder longDivision(Polynomial b) throws IllegalArgumentException{
-        //TODO: insert exception
+        if(this.getField().getP() != b.getField().getP()){
+            throw new IllegalArgumentException("Not equal coefficient primes");
+        }
 
         Polynomial q = new Polynomial(new Monomial[0], this.getField());
         Polynomial r = this;
