@@ -1,3 +1,5 @@
+package Values;
+
 /*
  * An immutable value object for objects in Z mod p.
  */
@@ -28,10 +30,10 @@ public class ZmodP {
     }
 
     /**
-     * Adds the value of two ZmodP objects.
+     * Adds the value of two Values.ZmodP objects.
      *
      * @param b The value to be added to the value of {@code this}.
-     * @return A new ZmodP object with the combined value of {@code this} and {@code b}.
+     * @return A new Values.ZmodP object with the combined value of {@code this} and {@code b}.
      */
     public ZmodP add(ZmodP b) {
         if (b.getP() != getP()) {
@@ -48,10 +50,10 @@ public class ZmodP {
     }
 
     /**
-     * Subtracts the value of two ZmodP objects.
+     * Subtracts the value of two Values.ZmodP objects.
      *
      * @param b The value to be subtracted from the value of {@code this}.
-     * @return A new ZmodP object with the value of {@code b} subtracted from the value of {@code this}.
+     * @return A new Values.ZmodP object with the value of {@code b} subtracted from the value of {@code this}.
      */
     public ZmodP sub(ZmodP b) {
         if (b.getP() != getP()) {
@@ -153,5 +155,10 @@ public class ZmodP {
         for (int i = 0; i < classes.length; i++) {
             classes[i] = i;
         }
+    }
+
+    @Override
+    public String toString() {
+        return getValue() + " mod " + getP();
     }
 }

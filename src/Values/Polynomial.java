@@ -1,4 +1,5 @@
-import java.lang.management.MonitorInfo;
+package Values;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -168,7 +169,7 @@ public class Polynomial  {
             }
         }
         if(this.monomials == null || this.monomials.length < 1 || coef == null){
-            throw new IllegalArgumentException("Monomial does not contain coefficients");
+            throw new IllegalArgumentException("Values.Monomial does not contain coefficients");
         } else {
             return coef;
         }
