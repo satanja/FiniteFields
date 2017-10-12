@@ -23,16 +23,31 @@ public class Polynomial  {
     }
 
     //TODO: Contract
-    public ZmodP GetField() {
-
+    public ZmodP getField() {
         return F;
     }
+
+    public boolean hasExponent(Monomial m){
+        for(Monomial thisM : this.getMonomials()){
+            if(thisM.getExponent() == m.getExponent()){
+                return true;
+            }
+        }
+        return false;
+    }
+
     //TODO: Contract
     public Polynomial add(Polynomial g) {
 
         Monomial[] monomialsg = g.getMonomials();
 
         List<Monomial> monomialsListh = new ArrayList<Monomial>();
+
+        for(Monomial mg : monomialsg) {
+            if(!this.hasExponent(mg)){
+                monomialsListh.add(new Monomial(new ZmodP(0,mg.getCoefficient().getP()),mg.getExponent()));
+            }
+        }
 
         for (Monomial mf: monomials)
         {
@@ -130,8 +145,59 @@ public class Polynomial  {
         //both polynomials have an equal number of monomials, and for each monomial they are identical.
         return true;
 
+    }
 
+    public int getDegree(){
+        int deg=0;
+        for(Monomial m : this.monomials){
+            if(m.getExponent() > deg){
+                deg = m.getExponent();
+            }
+        }
+        return deg;
+    }
 
+    public ZmodP getLc(){
+        ZmodP coef = null;
+        int deg = 0;
+        for(Monomial m : this.monomials){
+            if(m.getExponent() > deg){
+                deg = m.getExponent();
+                coef = m.getCoefficient();
+            }
+        }
+        if(this.monomials == null || this.monomials.length < 1 || coef == null){
+            throw new IllegalArgumentException("Monomial does not contain coefficients");
+        } else {
+            return coef;
+        }
+    }
+
+    public QuotientAndRemainder longDivision(Polynomial b) throws IllegalArgumentException{
+        //TODO: insert exception
+
+        Polynomial q = new Polynomial(new Monomial[0], this.getField());
+        Polynomial r = this;
+        while(r.getDegree() >= b.getDegree()){
+            // q
+            ZmodP coef = new ZmodP(r.getLc().getValue()/b.getLc().getValue(), this.F.getP());
+            int deg = r.getDegree()-b.getDegree();
+            for(Monomial qm : q.getMonomials()){
+                if(qm.getExponent() == deg){
+                    qm.getCoefficient().add(coef);
+                    break;
+                }
+            }
+            // r
+            coef.multiply(b.getField());
+            for(Monomial qm : r.getMonomials()) {
+                if (qm.getExponent() == deg) {
+                    qm.getCoefficient().sub(coef);
+                    break;
+                }
+            }
+        }
+        return new QuotientAndRemainder(q,r);
     }
 
     //TODO: Contract
