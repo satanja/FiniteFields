@@ -39,7 +39,14 @@ public class Polynomial  {
 
     //TODO: Contract
     public Polynomial add(Polynomial g) {
+        return add(g,false);
+    }
 
+    public Polynomial sub(Polynomial g){
+        return add(g,true);
+    }
+
+    private Polynomial add(Polynomial g, boolean negative){
         Monomial[] monomialsg = g.getMonomials();
 
         List<Monomial> monomialsListh = new ArrayList<Monomial>();
@@ -56,8 +63,12 @@ public class Polynomial  {
             for (Monomial mg: monomialsg) {
 
                 if (mf.getExponent() == mg.getExponent()) {
-
-                    ZmodP cof = mf.getCoefficient().add(mg.getCoefficient());
+                    ZmodP cof;
+                    if(negative){ //TODO: Test this
+                        cof = mf.getCoefficient().sub(mg.getCoefficient());
+                    } else {
+                        cof = mf.getCoefficient().add(mg.getCoefficient());
+                    }
 
                     if(cof.getValue() != 0) {
                         Monomial u = new Monomial(cof, mf.getExponent());
@@ -74,6 +85,8 @@ public class Polynomial  {
         Monomial[] monomialsh = convertListToArray(monomialsListh);
         return new Polynomial(monomialsh, this.F);
     }
+
+
     //TODO: Contract
     public Polynomial multiply(Polynomial g) {
 
@@ -181,7 +194,7 @@ public class Polynomial  {
      * @return
      * @throws IllegalArgumentException if {@code this.getField().getP() == b.getField().getP()}
      */
-    public QuotientAndRemainder longDivision(Polynomial b) throws IllegalArgumentException{
+    public PolyPair longDivision(Polynomial b) throws IllegalArgumentException{
         if(this.getField().getP() != b.getField().getP()){
             throw new IllegalArgumentException("Not equal coefficient primes");
         }
@@ -207,8 +220,39 @@ public class Polynomial  {
                 }
             }
         }
-        return new QuotientAndRemainder(q,r);
+        return new PolyPair(q,r);
     }
+
+    public Polynomial euclid(Polynomial b){
+        while(b.getMonomials().length>0){
+            Polynomial r = longDivision(b).getP2();
+            this.monomials = b.getMonomials();
+            b = r;
+        }
+        return this;
+    }
+
+    public PolyPair extendedEuclid(Polynomial b){
+        Polynomial x = new Polynomial(new Monomial[] {new Monomial(new ZmodP(1,this.getField().getP()),0)},this.getField());
+        Polynomial v = new Polynomial(new Monomial[] {new Monomial(new ZmodP(1,this.getField().getP()),0)},this.getField());
+        Polynomial y = new Polynomial(new Monomial[0],this.getField());
+        Polynomial u = new Polynomial(new Monomial[0],this.getField());
+
+        while(b.getMonomials().length>0){
+            PolyPair qAndR = this.longDivision(b);
+            Polynomial q = qAndR.getP1();
+            this.monomials = b.getMonomials();
+            b = qAndR.getP2();
+            Polynomial xPrime = x;
+            Polynomial yPrime = y;
+            x = u;
+            y = v;
+            u = xPrime.sub(q.multiply(u));
+            v = yPrime.sub(q.multiply(v));
+        }
+        return new PolyPair(x,y);
+    }
+
 
     //TODO: Contract
     private Monomial[] convertListToArray(List<Monomial> list) {
