@@ -137,25 +137,23 @@ public class Polynomial  {
     }
 
     //TODO: Contract
-    public boolean equals(Polynomial g, Polynomial h) {
+    public boolean equals(Polynomial g) {
 
-//        if (g.getMonomials().length != monomials.length) {
-//
-//            return false;
-//        }
-//        // both polynomials have an equal number of monomials
-//
-//        for(int i = 0; i < monomials.length; i++) {
-//
-//            if(monomials[i].getExponent() != g.getMonomialAtIndex(i).getExponent()) {
-//                return false;
-//            }
-//            //both monomials have the same exponent
-//
-//            if(!monomials[i].getCoefficient().equals(g.getMonomialAtIndex(i).getCoefficient())) {
-//                return false;
-//            }
-//        }
+        if (g.getMonomials().length != monomials.length) {
+            return false;
+        }
+        // both polynomials have an equal number of monomials
+
+        for(int i = 0; i < monomials.length; i++) {
+            if(monomials[i].getExponent() != g.getMonomialAtIndex(i).getExponent()) {
+                return false;
+            }
+            //both monomials have the same exponent
+
+            if(!monomials[i].getCoefficient().equals(g.getMonomialAtIndex(i).getCoefficient())) {
+                return false;
+            }
+        }
 
         //both polynomials have an equal number of monomials, and for each monomial they are identical.
         return true;
@@ -251,6 +249,15 @@ public class Polynomial  {
             v = yPrime.sub(q.multiply(v));
         }
         return new PolyPair(x,y);
+    }
+
+    public Polynomial mod(Polynomial mod){
+        //Get the remainder from long division
+        return this.longDivision(mod).getP2();
+    }
+
+    public boolean equalMod(Polynomial b, Polynomial mod){
+        return this.mod(mod).equals(b.mod(mod));
     }
 
 
