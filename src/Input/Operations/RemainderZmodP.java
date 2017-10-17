@@ -11,7 +11,7 @@ public class RemainderZmodP extends ZmodP_ZmodP_Template {
 
     @Override
     public String getCommand() {
-        return "multiply";
+        return "zmodp/multiply";
     }
 
     @Override
