@@ -19,4 +19,8 @@ public class PolyPair {
         return p2;
     }
 
+    public boolean equals(PolyPair pp){
+        return pp.getP1().equals(p1) && pp.getP2().equals(p2);
+    }
+
 }
