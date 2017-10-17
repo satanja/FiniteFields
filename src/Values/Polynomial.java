@@ -316,25 +316,21 @@ public class Polynomial  {
     //TODO: Contract
     private Polynomial sort(Polynomial f) {
 
-        Monomial[] result = new Monomial[f.getMonomials().length];
+
+        Monomial[] result = f.getMonomials();
 
         //insertion sort
         for (int i = 1; i < f.getMonomials().length; i++) {
 
-            Monomial x = f.getMonomialAtIndex(i);
             for(int j = i; j > 0; j--) {
 
-
-                if(f.getMonomialAtIndex(j -1).getExponent() > f.getMonomialAtIndex(j).getExponent()) {
-                    result[j] = f.getMonomialAtIndex(j - 1);
-                    result[j - 1] = f.getMonomialAtIndex(j);
-                } else {
-                    result[j] = f.getMonomialAtIndex(j);
-                    result[j - 1] = f.getMonomialAtIndex(j - 1);
+                if(result[j-1].getExponent() > result[j].getExponent()) {
+                    Monomial temp = result[j];
+                    result[j] = result[j - 1];
+                    result[j - 1] = temp;
                 }
 
             }
-
 
         }
         return new Polynomial(result, f.getField());
