@@ -3,7 +3,7 @@ package Values;
 /**
  * Created by s152124 on 10-10-2017.
  */
-public class Monomial {
+public class Monomial implements Comparable<Monomial> {
 
     private  ZmodP coefficient;
     private  int exponent;
@@ -21,4 +21,8 @@ public class Monomial {
         return exponent;
     }
 
+    @Override
+    public int compareTo(Monomial o) {
+        return getExponent() - o.getExponent();
+    }
 }
