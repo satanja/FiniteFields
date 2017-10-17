@@ -136,30 +136,65 @@ public class Polynomial  {
 
     }
 
-    //TODO: Contract
-    public boolean equals(Polynomial g) {
+    /**
+     *
+     * @param obj
+     * @return true iff obj is the same object as this,
+     * or object is an instanceof with
+     * <ul>
+     *     <li>obj has an equal number of monomials compared to this</li>
+     *     <li>for every pair of monomials of this and obj, if the exponent is the same then the coefficient is also the same</li>
+     *     <li>obj has the same hashcode as this</li>
+     * </ul>
+     */
+    @Override
+    public boolean equals(Object obj) {
 
-        if (g.getMonomials().length != monomials.length) {
-            return false;
+        if(this == obj) {
+            return true;
         }
-        // both polynomials have an equal number of monomials
 
-        for(int i = 0; i < monomials.length; i++) {
-            if(monomials[i].getExponent() != g.getMonomialAtIndex(i).getExponent()) {
+        if(obj instanceof Polynomial) {
+
+            Polynomial g = (Polynomial) obj; //down cast
+
+            if (g.getMonomials().length != monomials.length) {
                 return false;
             }
-            //both monomials have the same exponent
+            // both polynomials have an equal number of monomials
 
-            if(!monomials[i].getCoefficient().equals(g.getMonomialAtIndex(i).getCoefficient())) {
+            for(int i = 0; i < monomials.length; i++) {
+                if(monomials[i].getExponent() != g.getMonomialAtIndex(i).getExponent()) {
+                    return false;
+                }
+                //both monomials have the same exponent
+
+                if(!monomials[i].getCoefficient().equals(g.getMonomialAtIndex(i).getCoefficient())) {
+                    return false;
+                }
+                //both monomials with the same exponent have the same coefficient
+            }
+
+            //both polynomials have an equal number of monomials, and for each monomial they are identical.
+
+            if(this.hashCode() != g.hashCode()) {
                 return false;
             }
+
+            //same hashcode, therefore obj is equal to this
+            return true;
+
         }
 
-        //both polynomials have an equal number of monomials, and for each monomial they are identical.
-        return true;
+        return false;
+
 
     }
 
+    /**
+     * Gets the highest exponent of a monomial of this polynomial, aka the degree of this
+     * @return the degree of this
+     */
     public int getDegree(){
         int deg=0;
         for(Monomial m : this.monomials){
@@ -170,6 +205,10 @@ public class Polynomial  {
         return deg;
     }
 
+    /**
+     * Gets the leading coefficient of this polynomial
+     * @return the leading coefficient of this polynomail
+     */
     public ZmodP getLc(){
         ZmodP coef = null;
         int deg = 0;
@@ -188,8 +227,8 @@ public class Polynomial  {
 
     /**
      *
-     * @param b
-     * @return
+     * @param b polynomial
+     * @return returns the remainder and the qoutient when doing long division
      * @throws IllegalArgumentException if {@code this.getField().getP() == b.getField().getP()}
      */
     public PolyPair longDivision(Polynomial b) throws IllegalArgumentException{
@@ -265,5 +304,10 @@ public class Polynomial  {
     private Monomial[] convertListToArray(List<Monomial> list) {
         Monomial[] h = new Monomial[list.size()];
         return  list.toArray(h);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }

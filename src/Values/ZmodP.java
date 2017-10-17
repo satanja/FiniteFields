@@ -106,23 +106,40 @@ public class ZmodP {
     }
 
     //TODO: Contract
-    public boolean equals(ZmodP b) {
+    @Override
+    public boolean equals(Object obj) {
 
-        boolean answer = false;
-
-        if(b.getP() == p) {
-            //same prime
-
-            int diff = value - b.getValue();
-            if(diff % p == 0) {
-                //value - b.getValue() is a multiple of p =>
-                //value is congruent with b.getValue() =>
-                //b.getValue() is in the same class as value, and so they are equal
-                answer = true;
-            }
+        if (this == obj) {
+            return true;
         }
 
-        return answer;
+        if (obj instanceof ZmodP) {
+
+            ZmodP b = (ZmodP) obj;
+            boolean answer = false;
+
+            if(b.getP() == p) {
+                //same prime
+
+                int diff = value - b.getValue();
+                if(diff % p == 0) {
+                    //value - b.getValue() is a multiple of p =>
+                    //value is congruent with b.getValue() =>
+                    //b.getValue() is in the same class as value, and so they are equal
+                    answer = true;
+                }
+            }
+            return answer;
+        }
+
+        return false;
+
+
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 
     /**
