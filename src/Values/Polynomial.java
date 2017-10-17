@@ -163,13 +163,17 @@ public class Polynomial  {
             }
             // both polynomials have an equal number of monomials
 
+
+            g = g.sort(g);
+            Polynomial f = this.sort(this);
+
             for(int i = 0; i < monomials.length; i++) {
-                if(monomials[i].getExponent() != g.getMonomialAtIndex(i).getExponent()) {
+                if(f.getMonomialAtIndex(i).getExponent() != g.getMonomialAtIndex(i).getExponent()) {
                     return false;
                 }
                 //both monomials have the same exponent
 
-                if(!monomials[i].getCoefficient().equals(g.getMonomialAtIndex(i).getCoefficient())) {
+                if(!f.getMonomialAtIndex(i).getCoefficient().equals(g.getMonomialAtIndex(i).getCoefficient())) {
                     return false;
                 }
                 //both monomials with the same exponent have the same coefficient
@@ -309,6 +313,33 @@ public class Polynomial  {
         return  list.toArray(h);
     }
 
+    //TODO: Contract
+    private Polynomial sort(Polynomial f) {
+
+        Monomial[] result = new Monomial[f.getMonomials().length];
+
+        //insertion sort
+        for (int i = 1; i < f.getMonomials().length; i++) {
+
+            Monomial x = f.getMonomialAtIndex(i);
+            for(int j = i; j > 0; j--) {
+
+
+                if(f.getMonomialAtIndex(j -1).getExponent() > f.getMonomialAtIndex(j).getExponent()) {
+                    result[j] = f.getMonomialAtIndex(j - 1);
+                    result[j - 1] = f.getMonomialAtIndex(j);
+                } else {
+                    result[j] = f.getMonomialAtIndex(j);
+                    result[j - 1] = f.getMonomialAtIndex(j - 1);
+                }
+
+            }
+
+
+        }
+        return new Polynomial(result, f.getField());
+
+    }
     @Override
     public int hashCode() {
         return 0;
