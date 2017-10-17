@@ -269,6 +269,7 @@ public class Polynomial  {
         return this;
     }
 
+    //TODO: Contract
     public PolyPair extendedEuclid(Polynomial b){
         Polynomial x = new Polynomial(new Monomial[] {new Monomial(new ZmodP(1,this.getField().getP()),0)},this.getField());
         Polynomial v = new Polynomial(new Monomial[] {new Monomial(new ZmodP(1,this.getField().getP()),0)},this.getField());
@@ -290,11 +291,13 @@ public class Polynomial  {
         return new PolyPair(x,y);
     }
 
+    //TODO: Contract
     public Polynomial mod(Polynomial mod){
         //Get the remainder from long division
         return this.longDivision(mod).getP2();
     }
 
+    //TODO: Contract
     public boolean equalMod(Polynomial b, Polynomial mod){
         return this.mod(mod).equals(b.mod(mod));
     }
