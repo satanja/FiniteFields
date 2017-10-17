@@ -105,7 +105,11 @@ public class ZmodP {
         return new ZmodP(newValue, p);
     }
 
-    //TODO: Contract
+    /**
+     *
+     * @param obj object to compare equals against
+     * @return  {@code (this == obj || obj.getP() == this.p &&  obj.getValue - this.value = kp)}
+     */
     @Override
     public boolean equals(Object obj) {
 
@@ -137,7 +141,10 @@ public class ZmodP {
 
     }
 
-    @Override
+    /**
+     *
+     * @return 0
+     */
     public int hashCode() {
         return 0;
     }

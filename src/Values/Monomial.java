@@ -25,4 +25,32 @@ public class Monomial implements Comparable<Monomial> {
     public int compareTo(Monomial o) {
         return getExponent() - o.getExponent();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj instanceof Monomial) {
+            Monomial m = (Monomial) obj;
+
+            if (!coefficient.equals(m.getCoefficient())) {
+                return false;
+            }
+
+            if (exponent != m.getExponent()) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }

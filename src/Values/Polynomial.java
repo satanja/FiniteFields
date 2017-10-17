@@ -313,8 +313,13 @@ public class Polynomial  {
         return  list.toArray(h);
     }
 
-    //TODO: Contract
-    private Polynomial sort(Polynomial f) {
+    /**
+     * Sorts the monomial list of the inputted polynomial in ascending order based on exponent
+     *
+     * @param f Polynomial
+     * @return sorts the monomials in f in ascending order based on exponent
+     */
+    public Polynomial sort(Polynomial f) {
 
 
         Monomial[] result = f.getMonomials();
