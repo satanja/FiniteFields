@@ -12,6 +12,9 @@ class PolynomialTest {
     Polynomial p2 = new Polynomial(new Monomial[]{m2,m1}, m1.getCoefficient());
     Polynomial p3 = new Polynomial(new Monomial[]{m1,m3}, m1.getCoefficient());
     Polynomial p4 = new Polynomial(new Monomial[]{m2,m4}, m1.getCoefficient());
+    Polynomial p5 = new Polynomial(new Monomial[]{m1,m2,m3}, m1.getCoefficient());
+    Polynomial p6 = new Polynomial(new Monomial[]{m3,m1,m2}, m1.getCoefficient());
+
 
 
     void testAdd(Polynomial p, Polynomial q, Polynomial expected){
@@ -48,9 +51,11 @@ class PolynomialTest {
 
     @org.junit.jupiter.api.Test
     void equals() {
-        testEquals(p1, p1, true);
-        testEquals(p1, p2, true);
-        testEquals(p1, p3, false);
+//        testEquals(p1, p1, true);
+//        testEquals(p1, p2, true);
+//        testEquals(p1, p3, false);
+//        testEquals(p1, p5, false);
+        testEquals(p5, p6, true);
     }
 
     void testLongDivision(Polynomial p, Polynomial q, PolyPair expected){
