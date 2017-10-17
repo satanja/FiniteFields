@@ -11,7 +11,7 @@ public class SubZmodP extends ZmodP_ZmodP_Template {
 
     @Override
     public String getCommand() {
-        return "sub";
+        return "zmodp/sub";
     }
 
     @Override

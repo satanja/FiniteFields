@@ -44,9 +44,10 @@ public class Main {
         input
             .addOperation(new AddZmodP(input))
             .addOperation(new SubZmodP(input))
-            .addOperation(new MultiplyZmodP(input))
+            .addOperation(new ProductZmodP(input))
             .addOperation(new RemainderZmodP(input))
-            .addOperation(new DivZmodP(input));
+            .addOperation(new DivZmodP(input))
+        ;
 
         input.read();
     }

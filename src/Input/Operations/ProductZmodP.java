@@ -4,14 +4,14 @@ import Input.Input;
 import Input.ZmodP_ZmodP_Template;
 import Values.ZmodP;
 
-public class MultiplyZmodP extends ZmodP_ZmodP_Template {
-    public MultiplyZmodP(Input input) {
+public class ProductZmodP extends ZmodP_ZmodP_Template {
+    public ProductZmodP(Input input) {
         super(input);
     }
 
     @Override
     public String getCommand() {
-        return "multiply";
+        return "zmodp/product";
     }
 
     @Override

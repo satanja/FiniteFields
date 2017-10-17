@@ -11,7 +11,7 @@ public class AddZmodP extends ZmodP_ZmodP_Template {
 
     @Override
     public String getCommand() {
-        return "add";
+        return "zmodp/add";
     }
 
     @Override
