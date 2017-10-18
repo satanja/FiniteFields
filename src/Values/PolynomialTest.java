@@ -12,7 +12,7 @@ class PolynomialTest {
     Polynomial p1 = new Polynomial(new Monomial[]{m1,m2}, m1.getCoefficient());
     Polynomial p2 = new Polynomial(new Monomial[]{m2,m1}, m1.getCoefficient());
     Polynomial p3 = new Polynomial(new Monomial[]{m1,m3}, m1.getCoefficient());
-    Polynomial p4 = new Polynomial(new Monomial[]{m2,m4}, m1.getCoefficient());
+    Polynomial p4 = new Polynomial(new Monomial[]{m2,m4}, m4.getCoefficient());
     Polynomial p5 = new Polynomial(new Monomial[]{m1,m2,m3}, m1.getCoefficient());
     Polynomial p6 = new Polynomial(new Monomial[]{m3,m1,m2}, m1.getCoefficient());
     Polynomial p7 = new Polynomial(new Monomial[]{m1,m5}, m1.getCoefficient());
@@ -24,9 +24,11 @@ class PolynomialTest {
 
     @org.junit.jupiter.api.Test
     void add() {
-        testAdd(p1,p2,new Polynomial(new Monomial[]{}, m1.getCoefficient()));
+        //testAdd(p1,p2,new Polynomial(new Monomial[]{}, m1.getCoefficient()));
         testAdd(p1,p3,new Polynomial(new Monomial[]{m2,m3}, m2.getCoefficient()));
-        testAdd(p5,p1.add(p7), new Polynomial(new Monomial[]{m5,m1,m2,m3}, m1.getCoefficient()));
+        testAdd(p1,p7, new Polynomial(new Monomial[]{}, m1.getCoefficient()));
+        testAdd(p1,p1, new Polynomial(new Monomial[]{}, m1.getCoefficient()));
+        testAdd(p5,p1.add(p7), new Polynomial(new Monomial[]{m2,m3}, m1.getCoefficient()));
     }
 
     void testSub(Polynomial p, Polynomial q, Polynomial expected){
@@ -88,7 +90,7 @@ class PolynomialTest {
 
     @org.junit.jupiter.api.Test
     void extendedEuclid() {
-        
+
     }
 
     void testMod(Polynomial p, Polynomial q, Polynomial expected){

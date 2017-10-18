@@ -1,5 +1,7 @@
 package Values;
 
+import Values.Exceptions.PValuesNotEqualException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,42 +49,48 @@ public class Polynomial  {
     }
 
     private Polynomial add(Polynomial g, boolean negative){
+        if(g.getField().getP() != this.getField().getP()){
+            throw new PValuesNotEqualException("p value should be equal: ("+g.getField().getP()+","+this.getField().getP()+")");
+        }
+
         Monomial[] monomialsg = g.getMonomials();
 
         List<Monomial> monomialsListh = new ArrayList<Monomial>();
 
-        //Add monomials to this if they do not exist
-        for(Monomial mg : monomialsg) {
-            if(!this.hasExponent(mg)){
-                monomialsListh.add(new Monomial(new ZmodP(0,mg.getCoefficient().getP()),mg.getExponent()));
-            }
-        }
-
-        for (Monomial mf: monomials)
-        {
-            for (Monomial mg: monomialsg) {
-
-                if (mf.getExponent() == mg.getExponent()) {
-                    ZmodP cof;
-                    if(negative){ //TODO: Test this
-                        cof = mf.getCoefficient().sub(mg.getCoefficient());
-                    } else {
-                        cof = mf.getCoefficient().add(mg.getCoefficient());
+        //Add everything in {@Code this}. If the element is not in g, add the element as it is in {@Code this}.
+        for(Monomial m : monomials){
+            if(!g.hasExponent(m) && m.getCoefficient().getValue() != 0){
+                monomialsListh.add(m);
+            } else {
+                for (Monomial n : monomialsg) {
+                    System.out.println("(" + m.getCoefficient() + ", " + m.getExponent() + ")" + "(" + n.getCoefficient() + ", " + n.getExponent() + ")");
+                    if (m.getExponent() == n.getExponent()) {
+                        ZmodP value;
+                        if(negative){ //Is it addition or subtraction?
+                            value = m.getCoefficient().sub(n.getCoefficient());
+                        } else {
+                            value = m.getCoefficient().add(n.getCoefficient());
+                        }
+                        if (value.getValue() != 0) {// Do not add Monomial if its value is 0
+                            monomialsListh.add(new Monomial(value, m.getExponent()));
+                        }
+                        break;
                     }
-
-                    if(cof.getValue() != 0) {
-                        Monomial u = new Monomial(cof, mf.getExponent());
-                        monomialsListh.add(u);
-                    }
-
-                    //A monomial with the same exponent only appears exactly one
-                    break;
                 }
-
             }
         }
 
+        //Add all elements which were not added yet (having an exponent which is not in {@Code this}.
+        for(Monomial n : monomialsg){
+            if(!this.hasExponent(n) && n.getCoefficient().getValue() != 0){
+                monomialsListh.add(n);
+            }
+        }
         Monomial[] monomialsh = convertListToArray(monomialsListh);
+        for(Monomial m : monomialsh){
+            System.out.println("("+m.getCoefficient()+", "+m.getExponent()+")");
+        }
+        System.out.println("--------");
         return new Polynomial(monomialsh, this.F);
     }
 
