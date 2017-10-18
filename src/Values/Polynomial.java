@@ -63,7 +63,6 @@ public class Polynomial  {
                 monomialsListh.add(m);
             } else {
                 for (Monomial n : monomialsg) {
-                    System.out.println("(" + m.getCoefficient() + ", " + m.getExponent() + ")" + "(" + n.getCoefficient() + ", " + n.getExponent() + ")");
                     if (m.getExponent() == n.getExponent()) {
                         ZmodP value;
                         if(negative){ //Is it addition or subtraction?
@@ -80,17 +79,13 @@ public class Polynomial  {
             }
         }
 
-        //Add all elements which were not added yet (having an exponent which is not in {@Code this}.
+        //Add all elements which were not added yet (having an exponent which is not in {@Code this}).
         for(Monomial n : monomialsg){
             if(!this.hasExponent(n) && n.getCoefficient().getValue() != 0){
                 monomialsListh.add(n);
             }
         }
         Monomial[] monomialsh = convertListToArray(monomialsListh);
-        for(Monomial m : monomialsh){
-            System.out.println("("+m.getCoefficient()+", "+m.getExponent()+")");
-        }
-        System.out.println("--------");
         return new Polynomial(monomialsh, this.F);
     }
 

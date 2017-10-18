@@ -9,13 +9,16 @@ class PolynomialTest {
     Monomial m3 = new Monomial(new ZmodP(5,2),1);
     Monomial m4 = new Monomial(new ZmodP(1,3),3);
     Monomial m5 = new Monomial(new ZmodP(5,2),2);
+    Monomial m6 = new Monomial(new ZmodP(2,3),3);
     Polynomial p1 = new Polynomial(new Monomial[]{m1,m2}, m1.getCoefficient());
     Polynomial p2 = new Polynomial(new Monomial[]{m2,m1}, m1.getCoefficient());
     Polynomial p3 = new Polynomial(new Monomial[]{m1,m3}, m1.getCoefficient());
-    Polynomial p4 = new Polynomial(new Monomial[]{m2,m4}, m4.getCoefficient());
+    Polynomial p4 = new Polynomial(new Monomial[]{m6,m4}, m4.getCoefficient());
     Polynomial p5 = new Polynomial(new Monomial[]{m1,m2,m3}, m1.getCoefficient());
     Polynomial p6 = new Polynomial(new Monomial[]{m3,m1,m2}, m1.getCoefficient());
     Polynomial p7 = new Polynomial(new Monomial[]{m1,m5}, m1.getCoefficient());
+    Polynomial p8 = new Polynomial(new Monomial[]{m6}, m6.getCoefficient());
+    Polynomial p9 = new Polynomial(new Monomial[]{m4}, m4.getCoefficient());
 
 
     void testAdd(Polynomial p, Polynomial q, Polynomial expected){
@@ -28,6 +31,10 @@ class PolynomialTest {
         testAdd(p1,p3,new Polynomial(new Monomial[]{m2,m3}, m2.getCoefficient()));
         testAdd(p1,p7, new Polynomial(new Monomial[]{}, m1.getCoefficient()));
         testAdd(p1,p1, new Polynomial(new Monomial[]{}, m1.getCoefficient()));
+        testAdd(p9,p9, new Polynomial(new Monomial[]{m6}, m1.getCoefficient()));
+        testAdd(p9,p9.add(p9), new Polynomial(new Monomial[]{}, m1.getCoefficient()));
+        testAdd(p8,p8, new Polynomial(new Monomial[]{m4}, m1.getCoefficient()));
+        testAdd(p9,p8, new Polynomial(new Monomial[]{}, m1.getCoefficient()));
         testAdd(p5,p1.add(p7), new Polynomial(new Monomial[]{m2,m3}, m1.getCoefficient()));
     }
 
