@@ -54,10 +54,13 @@ class PolynomialTest {
     void testSub(Polynomial p, Polynomial q, Polynomial expected){
         assertTrue(p.sub(q).equals(expected));
     }
+    Monomial ms4 = new Monomial(new ZmodP(5,11),1);
+    Polynomial ps4 = new Polynomial(new Monomial[]{ms4}, ms4.getCoefficient());
     @org.junit.jupiter.api.Test
     void sub() {
         testSub(p1,p2,new Polynomial(new Monomial[]{}, m1.getCoefficient()));
         testSub(p1,p3,new Polynomial(new Monomial[]{m2,m3}, m2.getCoefficient()));
+        testSub(ps4,ps4,new Polynomial(new Monomial[]{},ps4.getField()));
     }
 
     void testMultiply(Polynomial p, Polynomial q, Polynomial expected){
@@ -99,9 +102,15 @@ class PolynomialTest {
     Polynomial pl2 = new Polynomial(new Monomial[]{ml1}, ml1.getCoefficient());
     Polynomial pl3 = new Polynomial(new Monomial[]{ml0,ml1}, ml0.getCoefficient());
 
+    Monomial ml4 = new Monomial(new ZmodP(5,11),1);
+    Monomial ml5 = new Monomial(new ZmodP(1,11),0);
+    Polynomial pl4 = new Polynomial(new Monomial[]{ml4}, ml4.getCoefficient());
+
     @org.junit.jupiter.api.Test
     void longDivision() {
         testLongDivision(pl1,pl0,new PolyPair(pl2,pl3));
+        testLongDivision(pl1,pl1,new PolyPair(new Polynomial(new Monomial[]{ml0},pl1.getField()),new Polynomial(new Monomial[]{},pl1.getField())));
+        testLongDivision(pl4,pl4,new PolyPair(new Polynomial(new Monomial[]{ml5},pl4.getField()),new Polynomial(new Monomial[]{},pl4.getField())));
     }
 
     void testEuclid(Polynomial p, Polynomial q, Polynomial expected){

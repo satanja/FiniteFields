@@ -214,7 +214,7 @@ public class Polynomial  {
      *
      * @param b polynomial
      * @pre {@code this.getDegree() >= b.getDegree() && this.getField().getP() == b.getField().getP()}
-     * @return returns the remainder and the qoutient when doing long division
+     * @return PolyPair(q,r) where q is the quotient and r is the remainder
      * @throws Values.Exceptions.PNotPrimeException if {@code this.getField().getP() != b.getField().getP()}
      * @throws IllegalArgumentException if {@code this.getDegree() < b.getDegree()}
      */

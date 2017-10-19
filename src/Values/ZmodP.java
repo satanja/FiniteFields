@@ -63,7 +63,7 @@ public class ZmodP {
             throw new PValuesNotEqualException("p value should be equal");
         }
 
-        int newValue = getValue() + b.getValue();
+        int newValue = getValue() - b.getValue();
 
         if (newValue < 0) {
             newValue += p;
