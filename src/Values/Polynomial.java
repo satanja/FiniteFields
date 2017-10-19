@@ -395,7 +395,7 @@ public class Polynomial  {
 
             // Append the exponent.
             if (e == 0) { // Do not print X if the exponent is zero.
-                b.append(e).append(" ");
+                b.append(" ");
             } else if (e == 1) { // Do not print the exponent if it is one.
                 b.append("X ");
             } else {
