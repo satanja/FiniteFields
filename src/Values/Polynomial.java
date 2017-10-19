@@ -344,8 +344,50 @@ public class Polynomial  {
         return new Polynomial(result, f.getField());
 
     }
+
     @Override
     public int hashCode() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder();
+        Monomial[] monomials = getMonomials();
+
+        boolean first = true;
+        for(Monomial m : monomials) {
+            ZmodP zmodp = m.getCoefficient();
+            int c = zmodp.getValue();
+            int e = m.getExponent();
+
+            if (first) {
+                first = false;
+            } else {
+                b.append("+ ");
+            }
+
+            // Add the coefficient is it is not zero.
+            if (c == 0) {
+                continue; // Zero factor.
+            } else if (c != 1) {
+                b.append(c).append("");
+            }
+
+            // Append the exponent.
+            if (e == 0) { // Do not print X if the exponent is zero.
+                b.append(e).append(" ");
+            } else if (e == 1) { // Do not print the exponent if it is one.
+                b.append("X ");
+            } else {
+                b.append("X").append(e).append(" ");
+            }
+        }
+
+        // Add the modulo part.
+        int p = monomials[0].getCoefficient().getP();
+        b.append("mod ").append(p);
+
+        return b.toString();
     }
 }
