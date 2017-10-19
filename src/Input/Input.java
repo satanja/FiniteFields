@@ -121,6 +121,7 @@ public class Input {
 
     Polynomial readPolynomial(String name) {
         System.out.println(inputPrefix + "[" + name + "] Please enter a Values.Poly value in the format 'c_0 X e_0 + c_1 X e_1 + ... + c_n X e_n mod P' with P as a prime and for all c_i and e_i as integer values, with i from 0 to n.");
+        System.out.println(inputPrefix + "Note: For the input notation can spaces and ones be omitted.");
 
         Polynomial result = null;
         String firstCheckValidInput = "(?:\\s*(\\d*)(?:\\s*[Xx]\\s*(\\d)*)?)(?:(?:\\s*\\+)(?:\\s*(\\d*)(?:\\s*[Xx]\\s*(\\d*))?)*)*\\s*[mod]{1,3}\\s*(\\d+)";
@@ -199,7 +200,7 @@ public class Input {
                 continue;
             }
 
-            Monomial[] monomialsAsArray = {};
+            Monomial[] monomialsAsArray = new Monomial[monomials.size()];
             monomials.toArray(monomialsAsArray);
 
             result = new Polynomial(monomialsAsArray, new ZmodP(0, mod));
