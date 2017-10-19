@@ -95,6 +95,7 @@ class PolynomialTest {
     Polynomial pl1 = new Polynomial(new Monomial[]{ml0,ml3}, ml0.getCoefficient());
     Polynomial pl2 = new Polynomial(new Monomial[]{ml1}, ml1.getCoefficient());
     Polynomial pl3 = new Polynomial(new Monomial[]{ml0,ml1}, ml0.getCoefficient());
+
     @org.junit.jupiter.api.Test
     void longDivision() {
         testLongDivision(pl1,pl0,new PolyPair(pl2,pl3));
