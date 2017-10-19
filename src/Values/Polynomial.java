@@ -255,12 +255,15 @@ public class Polynomial  {
     }
 
     public Polynomial euclid(Polynomial b){
+        Monomial[] mons = new Monomial[]{};
+        Polynomial q;
         while(b.getMonomials().length>0){
             Polynomial r = longDivision(b).getP2();
-            this.monomials = b.getMonomials();
+            mons = b.getMonomials();
             b = r;
         }
-        return this;
+        q = new Polynomial(mons,this.getField());
+        return q;
     }
 
     //TODO: Contract

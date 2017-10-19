@@ -104,16 +104,16 @@ class PolynomialTest {
 
     @org.junit.jupiter.api.Test
     void euclid() {
-
+        testEuclid(pl1,pl0,pl3);
     }
 
-    void testExtendedEuclid(Polynomial p, Polynomial q, Polynomial expected){
+    void testExtendedEuclid(Polynomial p, Polynomial q, PolyPair expected){
         assertTrue(p.extendedEuclid(q).equals(expected));
     }
 
     @org.junit.jupiter.api.Test
     void extendedEuclid() {
-
+        testExtendedEuclid(pl1,pl0,new PolyPair(new Polynomial(new Monomial[]{ml0},pl1.getField()),new Polynomial(new Monomial[]{ml1},pl0.getField())));
     }
 
     void testMod(Polynomial p, Polynomial q, Polynomial expected){
