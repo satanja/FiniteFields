@@ -99,7 +99,6 @@ public class Polynomial  {
         for (Monomial mf: monomials)
         {
             for (Monomial mg: monomialsg) {
-
                 ZmodP cof = mf.getCoefficient().multiply(mg.getCoefficient());
                 if(cof.getValue() != 0) {
                     Monomial u = new Monomial(cof, mf.getExponent() + mg.getExponent());
@@ -114,8 +113,6 @@ public class Polynomial  {
 
     //TODO: Contract
     public Polynomial scarlarMultiply(int c) {
-
-
         // c mod p
         ZmodP cof = new ZmodP(c, F.getP());
         List<Monomial> monomialsListh = new ArrayList<Monomial>();
@@ -124,19 +121,14 @@ public class Polynomial  {
         // given (a mod p) = a,
         // (a * (c mod p)) mod p == (ac) mod p
         for(int i = 0; i < monomials.length; i++) {
-
              cof =  monomials[i].getCoefficient().multiply(cof);
-
              if(cof.getValue() != 0) {
                  Monomial u = new Monomial(cof, monomials[i].getExponent());
                  monomialsListh.add(u);
              }
-
         }
-
         Monomial[] monomialsh = convertListToArray(monomialsListh);
         return new Polynomial(monomialsh, this.F);
-
     }
 
     /**
@@ -152,50 +144,35 @@ public class Polynomial  {
      */
     @Override
     public boolean equals(Object obj) {
-
         if(this == obj) {
             return true;
         }
-
         if(obj instanceof Polynomial) {
-
             Polynomial g = (Polynomial) obj; //down cast
-
             if (g.getMonomials().length != monomials.length) {
                 return false;
             }
             // both polynomials have an equal number of monomials
-
-
             g = g.sort(g);
             Polynomial f = this.sort(this);
-
             for(int i = 0; i < monomials.length; i++) {
                 if(f.getMonomialAtIndex(i).getExponent() != g.getMonomialAtIndex(i).getExponent()) {
                     return false;
                 }
                 //both monomials have the same exponent
-
                 if(!f.getMonomialAtIndex(i).getCoefficient().equals(g.getMonomialAtIndex(i).getCoefficient())) {
                     return false;
                 }
                 //both monomials with the same exponent have the same coefficient
             }
-
             //both polynomials have an equal number of monomials, and for each monomial they are identical.
-
             if(this.hashCode() != g.hashCode()) {
                 return false;
             }
-
             //same hashcode, therefore obj is equal to this
             return true;
-
         }
-
         return false;
-
-
     }
 
     /**
@@ -214,7 +191,7 @@ public class Polynomial  {
 
     /**
      * Gets the leading coefficient of this polynomial
-     * @return the leading coefficient of this polynomail
+     * @return the leading coefficient of this polynomial
      */
     public ZmodP getLc(){
         ZmodP coef = null;
@@ -260,7 +237,8 @@ public class Polynomial  {
         return new PolyPair(q,r);
     }
 
-    /** Calculate the gcd vie the euclidean algorithm
+    /**
+     * Calculate the gcd by the euclidean algorithm
      *
      * @param b Polynomial
      * @pre {@code this.getField().getP() == b.getField().getP()}
@@ -313,15 +291,34 @@ public class Polynomial  {
         return new PolyPair(x,y);
     }
 
-    //TODO: Contract
-    public Polynomial mod(Polynomial mod){
+    /**
+     *
+     * @param m
+     * @pre {@code this.getField().getP() == m.getField().getP()}
+     * @throws Values.Exceptions.PNotPrimeException if {@code this.getField().getP() != m.getField().getP()}
+     * @return Polynomial p for which p == {@code this (mod m)}
+     */
+    public Polynomial mod(Polynomial m){
+        if(this.getField().getP() != m.getField().getP()){
+            throw new Values.Exceptions.PNotPrimeException("Not equal coefficient primes");
+        }
         //Get the remainder from long division
-        return this.longDivision(mod).getP2();
+        return this.longDivision(m).getP2();
     }
 
-    //TODO: Contract
-    public boolean equalMod(Polynomial b, Polynomial mod){
-        return this.mod(mod).equals(b.mod(mod));
+    /**
+     *
+     * @param b
+     * @param m
+     * @pre {@code this.getField().getP() == b.getField().getP() && b.getField().getP() == m.getField().getP()}
+     * @throws Values.Exceptions.PNotPrimeException if {@code !(this.getField().getP() == b.getField().getP() && b.getField().getP() == m.getField().getP())}
+     * @return boolean {@code this (mod m) == b (mod m)}
+     */
+    public boolean equalMod(Polynomial b, Polynomial m){
+        if(!(this.getField().getP() == b.getField().getP() && b.getField().getP() == m.getField().getP())){
+            throw new Values.Exceptions.PNotPrimeException("Not equal coefficient primes");
+        }
+        return this.mod(m).equals(b.mod(m));
     }
 
 
