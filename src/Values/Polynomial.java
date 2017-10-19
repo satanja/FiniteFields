@@ -246,34 +246,24 @@ public class Polynomial  {
         Polynomial q = new Polynomial(new Monomial[0], this.getField());
         Polynomial r = this;
         while(r.getDegree() >= b.getDegree()){
-            // q
             ZmodP coef = new ZmodP(r.getLc().getValue()/b.getLc().getValue(), this.F.getP());
             int deg = r.getDegree()-b.getDegree();
-            for(Monomial qm : q.getMonomials()){
-                if(qm.getExponent() == deg){
-                    qm.getCoefficient().add(coef);
-                    break;
-                }
-            }
-            // r
-            coef.multiply(b.getField());
-            for(Monomial qm : r.getMonomials()) {
-                if (qm.getExponent() == deg) {
-                    qm.getCoefficient().sub(coef);
-                    break;
-                }
-            }
+            q = q.add(new Polynomial(new Monomial[]{new Monomial(coef,deg)}, q.getField()));
+            r = r.sub(b.multiply(new Polynomial(new Monomial[]{new Monomial(coef,deg)}, r.getField())));
         }
         return new PolyPair(q,r);
     }
 
     public Polynomial euclid(Polynomial b){
+        Monomial[] mons = new Monomial[]{};
+        Polynomial q;
         while(b.getMonomials().length>0){
             Polynomial r = longDivision(b).getP2();
-            this.monomials = b.getMonomials();
+            mons = b.getMonomials();
             b = r;
         }
-        return this;
+        q = new Polynomial(mons,this.getField());
+        return q;
     }
 
     //TODO: Contract
