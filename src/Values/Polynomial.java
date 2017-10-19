@@ -233,18 +233,24 @@ public class Polynomial  {
     }
 
     /**
+     * Perform Long division on two Polynomials
      *
      * @param b polynomial
+     * @pre {@code this.getDegree() >= b.getDegree() && this.getField().getP() == b.getField().getP()}
      * @return returns the remainder and the qoutient when doing long division
-     * @throws IllegalArgumentException if {@code this.getField().getP() == b.getField().getP()}
+     * @throws Values.Exceptions.PNotPrimeException if {@code this.getField().getP() != b.getField().getP()}
+     * @throws IllegalArgumentException if {@code this.getDegree() < b.getDegree()}
      */
     public PolyPair longDivision(Polynomial b) throws IllegalArgumentException{
         if(this.getField().getP() != b.getField().getP()){
-            throw new IllegalArgumentException("Not equal coefficient primes");
+            throw new Values.Exceptions.PNotPrimeException("Not equal coefficient primes");
+        } else if(this.getDegree() < b.getDegree()){
+            throw new IllegalArgumentException("'this'.degree is smaller than b.degree: ("+this.getDegree()+"<"+b.getDegree()+")");
         }
 
         Polynomial q = new Polynomial(new Monomial[0], this.getField());
         Polynomial r = this;
+
         while(r.getDegree() >= b.getDegree()){
             ZmodP coef = new ZmodP(r.getLc().getValue()/b.getLc().getValue(), this.F.getP());
             int deg = r.getDegree()-b.getDegree();
@@ -254,7 +260,17 @@ public class Polynomial  {
         return new PolyPair(q,r);
     }
 
+    /** Calculate the gcd vie the euclidean algorithm
+     *
+     * @param b Polynomial
+     * @pre {@code this.getField().getP() == b.getField().getP()}
+     * @throws Values.Exceptions.PNotPrimeException if {@code this.getField().getP() != b.getField().getP()}
+     * @return gcd(this,b)
+     */
     public Polynomial euclid(Polynomial b){
+        if(this.getField().getP() != b.getField().getP()){
+            throw new Values.Exceptions.PNotPrimeException("Not equal coefficient primes");
+        }
         Monomial[] mons = new Monomial[]{};
         Polynomial q;
         while(b.getMonomials().length>0){
@@ -266,8 +282,17 @@ public class Polynomial  {
         return q;
     }
 
-    //TODO: Contract
+    /**
+     *
+     * @param b Polynomial
+     * @pre {@code this.getField().getP() == b.getField().getP()}
+     * @throws Values.Exceptions.PNotPrimeException if {@code this.getField().getP() != b.getField().getP()}
+     * @return PolyPair(x,y) where gcd(this,b) = this*x+b*y
+     */
     public PolyPair extendedEuclid(Polynomial b){
+        if(this.getField().getP() != b.getField().getP()){
+            throw new Values.Exceptions.PNotPrimeException("Not equal coefficient primes");
+        }
         Polynomial x = new Polynomial(new Monomial[] {new Monomial(new ZmodP(1,this.getField().getP()),0)},this.getField());
         Polynomial v = new Polynomial(new Monomial[] {new Monomial(new ZmodP(1,this.getField().getP()),0)},this.getField());
         Polynomial y = new Polynomial(new Monomial[0],this.getField());
