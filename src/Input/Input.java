@@ -1,11 +1,14 @@
 package Input;
 
 import Values.Exceptions.PNotPrimeException;
+import Values.Monomial;
+import Values.Polynomial;
 import Values.ZmodP;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -111,16 +114,121 @@ public class Input {
 
                 return new ZmodP(value, p);
             } catch (PNotPrimeException e) {
-                System.out.println("P should be prime, please try again.");
+                System.out.println(outputPrefix + "P should be prime, please try again.");
             }
         } while (true);
     }
 
-    void readPolynomial() {
-        // Implement this
+    Polynomial readPolynomial(String name) {
+        System.out.println(inputPrefix + "[" + name + "] Please enter a Values.Poly value in the format 'c_0 X e_0 + c_1 X e_1 + ... + c_n X e_n mod P' with P as a prime and for all c_i and e_i as integer values, with i from 0 to n.");
+
+        Polynomial result = null;
+        String firstCheckValidInput = "(?:\\s*(\\d*)(?:\\s*[Xx]\\s*(\\d)*)?)(?:(?:\\s*\\+)(?:\\s*(\\d*)(?:\\s*[Xx]\\s*(\\d*))?)*)*\\s*[mod]{1,3}\\s*(\\d+)";
+
+        while (result == null) {
+            String line = scanner.nextLine().toLowerCase();
+            line = line.replaceAll("\\s", ""); // Remove all whitespaces.
+
+
+            if (line.equals("")) continue; // Skip empty lines.
+
+            // Do some initial checking if the string has things like a "mod {int}" part, no monomials preceding "mod", and so on.
+            if (! line.matches(firstCheckValidInput)) {
+                System.out.println(outputPrefix + "Invalid input given, please check if it satisfies the syntax and try again.");
+                continue;
+            }
+
+            String[] parts = line.split("mod");
+            String polynomials = parts[0];
+            String modDigitAsString = parts[1];
+
+            // Retrieve the mod digit.
+            int mod;
+            try {
+                mod = stringWithWhitespaceToInt(modDigitAsString);
+            } catch (IllegalArgumentException e) {
+                System.out.println(outputPrefix + "Modulo digit not detected, please check your syntax and try again.");
+                continue;
+            }
+
+            // Retrieve the monomials.
+            String[] monomialsString = polynomials.split("\\+");
+            Stack<Monomial> monomials = new Stack<>();
+            boolean readMonomialsSuccessful = true;
+            for(String stringedMonomial : monomialsString) {
+                String[] splitted = stringedMonomial.split("x");
+                int c;
+                int e;
+
+                switch (splitted.length) {
+                    case 0: // Apparently the empty string was passed.
+                        // Skip the empty string.
+                        continue;
+                    case 1: // Either the digit preceding or succeeding the x is not passed. Check which one it was.
+                        int i = stringedMonomial.indexOf("x");
+                        if (i == 0) { // Check if the preceding digit was not passed.
+                            c = 1;
+                            e = stringWithWhitespaceToInt(splitted[0]);
+                        } else if (i == stringedMonomial.length() - 1) { // Check if the succeeding digit was not passed.
+                            c = stringWithWhitespaceToInt(splitted[0]);
+                            e = 1;
+                        } else if (i == -1) { // No x was passed.
+                            c = stringWithWhitespaceToInt(stringedMonomial);
+                            e = 0;
+                        } else { // This should not happen.
+                            readMonomialsSuccessful = false;
+                            continue;
+                        }
+                        break;
+                    case 2: // Both arguments were passed.
+                        c = stringWithWhitespaceToInt(splitted[0]);
+                        e = stringWithWhitespaceToInt(splitted[1]);
+                        break;
+                    default: // This should never happen.
+                        readMonomialsSuccessful = false;
+                        continue;
+                }
+
+                Monomial m = new Monomial(new ZmodP(c, mod), e);
+                monomials.push(m);
+            }
+
+            // Check if the monomial was read successfully, if not allow the user to retry.
+            if (!readMonomialsSuccessful) {
+                System.out.println(outputPrefix + "Something went wrong when reading your polynomial, pleasy check the syntax and try again.");
+                continue;
+            }
+
+            Monomial[] monomialsAsArray = {};
+            monomials.toArray(monomialsAsArray);
+
+            result = new Polynomial(monomialsAsArray, new ZmodP(0, mod));
+        }
+
+        return result;
     }
 
-    void readField() {
+    /**
+     * Removes all whitespace from a string and then tries to convert it into an integer.
+     *
+     * @throws IllegalArgumentException If the input could not be converted into an integer.
+     * @param s The string to be stripped.
+     * @return The integer value.
+     */
+    protected int stringWithWhitespaceToInt(String s) throws IllegalArgumentException {
+        s = s.replaceAll("\\s", "");
+        int result;
+
+        try {
+            result = Integer.valueOf(s);
+        } catch (IllegalStateException e) {
+            throw new IllegalArgumentException();
+        }
+
+        return result;
+    }
+
+    void readField(String name) {
         // Implement this
     }
 }

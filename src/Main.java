@@ -47,6 +47,7 @@ public class Main {
             .addOperation(new ProductZmodP(input))
             .addOperation(new RemainderZmodP(input))
             .addOperation(new DivZmodP(input))
+            .addOperation(new SumPoly(input))
         ;
 
         input.read();
