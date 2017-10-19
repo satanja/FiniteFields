@@ -1,6 +1,8 @@
 package Values;
 
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PolynomialTest {
@@ -14,7 +16,7 @@ class PolynomialTest {
     Polynomial p1 = new Polynomial(new Monomial[]{m1,m2}, m1.getCoefficient());
     Polynomial p2 = new Polynomial(new Monomial[]{m2,m1}, m1.getCoefficient());
     Polynomial p3 = new Polynomial(new Monomial[]{m1,m3}, m1.getCoefficient());
-    Polynomial p4 = new Polynomial(new Monomial[]{m6,m4}, m4.getCoefficient());
+    Polynomial p4 = new Polynomial(new Monomial[]{m6,m4}, m4.getCoefficient()); // Illegal, different mod.
     Polynomial p5 = new Polynomial(new Monomial[]{m1,m2,m3}, m1.getCoefficient());
     Polynomial p6 = new Polynomial(new Monomial[]{m3,m1,m2}, m1.getCoefficient());
     Polynomial p7 = new Polynomial(new Monomial[]{m1,m5}, m1.getCoefficient());
@@ -134,4 +136,15 @@ class PolynomialTest {
 
     }
 
+    @Test
+    void toStringTest() {
+        testToString(p1, "X2 mod 2");
+        testToString(p2, "X2 mod 2");
+        testToString(p3, "X mod 2");
+        testToString(p5, "X2 + X mod 2");
+    }
+
+    void testToString(Polynomial p, String e) {
+        assertEquals(e, p.toString());
+    }
 }

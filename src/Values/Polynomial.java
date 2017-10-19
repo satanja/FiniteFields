@@ -351,17 +351,21 @@ public class Polynomial  {
             int c = zmodp.getValue();
             int e = m.getExponent();
 
+            // Skip this monomial if its coefficient is zero anyway.
+            if (c == 0) {
+                continue; // Zero factor.
+            }
+
+            // Split the coefficients with a plus.
             if (first) {
                 first = false;
             } else {
                 b.append("+ ");
             }
 
-            // Add the coefficient is it is not zero.
-            if (c == 0) {
-                continue; // Zero factor.
-            } else if (c != 1) {
-                b.append(c).append("");
+            // Only draw the coefficient is it is not 1.
+            if (c != 1) {
+                b.append(c);
             }
 
             // Append the exponent.
