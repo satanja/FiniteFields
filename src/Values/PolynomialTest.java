@@ -1,6 +1,8 @@
 package Values;
 
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PolynomialTest {
@@ -11,22 +13,25 @@ class PolynomialTest {
     Monomial m4 = new Monomial(new ZmodP(1,3),3);
     Monomial m5 = new Monomial(new ZmodP(5,2),2);
     Monomial m6 = new Monomial(new ZmodP(2,3),3);
+    Monomial m7 = new Monomial(new ZmodP(2,5),2);
+    Monomial m8 = new Monomial(new ZmodP(4,5),4);
+    Monomial m9 = new Monomial(new ZmodP(6,5),2);
+    Monomial m10 = new Monomial(new ZmodP(3,5),3);
+    Monomial m11 = new Monomial(new ZmodP(3,5),0);
+
     Polynomial p1 = new Polynomial(new Monomial[]{m1,m2}, m1.getCoefficient());
     Polynomial p2 = new Polynomial(new Monomial[]{m2,m1}, m1.getCoefficient());
     Polynomial p3 = new Polynomial(new Monomial[]{m1,m3}, m1.getCoefficient());
-    Polynomial p4 = new Polynomial(new Monomial[]{m6,m4}, m4.getCoefficient());
+    Polynomial p4 = new Polynomial(new Monomial[]{m6,m4}, m4.getCoefficient()); // Illegal, different mod.
     Polynomial p5 = new Polynomial(new Monomial[]{m1,m2,m3}, m1.getCoefficient());
     Polynomial p6 = new Polynomial(new Monomial[]{m3,m1,m2}, m1.getCoefficient());
     Polynomial p7 = new Polynomial(new Monomial[]{m1,m5}, m1.getCoefficient());
     Polynomial p8 = new Polynomial(new Monomial[]{m6}, m6.getCoefficient());
     Polynomial p9 = new Polynomial(new Monomial[]{m4}, m4.getCoefficient());
-
-    Monomial m7 = new Monomial(new ZmodP(2,5),2);
-    Monomial m8 = new Monomial(new ZmodP(4,5),4);
-    Monomial m9 = new Monomial(new ZmodP(6,5),2);
-    Monomial m10 = new Monomial(new ZmodP(3,5),3);
     Polynomial p10 = new Polynomial(new Monomial[]{m7,m8}, m7.getCoefficient());
     Polynomial p11 = new Polynomial(new Monomial[]{m9,m10}, m9.getCoefficient());
+    Polynomial p12 = new Polynomial(new Monomial[]{m9,m10,m11}, m9.getCoefficient());
+
 
 
     void testAdd(Polynomial p, Polynomial q, Polynomial expected){
@@ -135,4 +140,16 @@ class PolynomialTest {
 
     }
 
+    @Test
+    void toStringTest() {
+        testToString(p1, "X2 mod 2");
+        testToString(p2, "X2 mod 2");
+        testToString(p3, "X mod 2");
+        testToString(p5, "X2 + X mod 2");
+        testToString(p12, "X2 + 3X3 + 3 mod 5");
+    }
+
+    void testToString(Polynomial p, String e) {
+        assertEquals(e, p.toString());
+    }
 }
