@@ -406,4 +406,81 @@ public class Polynomial  {
 
         return b.toString();
     }
+
+    /**
+     * Returns whether this is an irreducible polynomial (using algorithm 4.1.4)
+     * @return
+     */
+    public boolean isIrreducible() {
+
+        if(this == null) {
+            //raise null exception
+        }
+
+
+        int t = 0;
+        ZmodP one = new ZmodP(1, F.getP());
+        ZmodP negOne = new ZmodP (-1, F.getP());
+        Monomial[] monos = new Monomial[2];
+        Polynomial g;
+        Polynomial h;
+
+        do {
+            t++;
+            monos[0] = new Monomial(one, power(F.getP(), t));
+            monos[1] = new Monomial(negOne, 1);
+            g = new Polynomial(monos, F);
+            //g = X^{q^t} - X
+            h = euclid(g);
+            //h = gcd(this, g)
+
+        } while(h.getDegree() == 0); //a unit returns degree 0, which means the gcd(this, g) = 1
+
+
+        return t == this.getDegree();
+
+
+
+    }
+
+    /**
+     * Returns an irreducible polynomial of {@code this.getDegree()}
+     * @return
+     */
+    public Polynomial generateIrreducible() {
+
+        //get the desired degree for the irreducible polynomial
+        int deg = this.getDegree();
+        Polynomial g = null;
+        /*
+        do {
+
+
+
+
+        } while (!g.isIrreducible());
+
+        //g is irreducible
+        */
+        return g;
+
+    }
+
+
+    /**
+     * Returns q^t
+     * @param q
+     * @param t
+     * @return
+     */
+
+    private int power(int q, int t) {
+        int p = 1;
+
+        for(int i = 0; i < t; i++) {
+            p *= q;
+        }
+
+        return p;
+    }
 }

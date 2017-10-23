@@ -35,10 +35,19 @@ public class FiniteField {
         return getOrder() / F.getP();
     }
 
+    public Polynomial getModulus() {
+        return f;
+    }
+
+    public ZmodP getField() {
+        return F;
+    }
 
     public Polynomial getElement() {
         return element;
     }
+
+
 
 
     public FiniteField add(FiniteField b) {
@@ -68,10 +77,45 @@ public class FiniteField {
 
     public FiniteField qoutient(FiniteField b) {
 
+        if(b != null) {
 
-        return null;
+            ZmodP zero = new ZmodP(0, b.getField().getP());
+            if (b.getElement().getDegree() == 0 && b.getElement().getMonomialAtIndex(0).equals(zero)) {
+
+            }
+        } else {
+            //b == null
+        }
+
+        //get the inverse of b
+        FiniteField bInverse;
+
+        if(gcdIsConstant(b)) {
+            //gcd(b, f) = 1
+            Polynomial inverse = b.getElement().extendedEuclid(b.getModulus()).getP1();
+            bInverse = new FiniteField(b.getModulus(), b.getField(), inverse);
+            return multiply(bInverse);
+
+
+        } else {
+            //gcd(b, f) != 1
+            //raise exception
+            return null;
+        }
+
 
     }
+
+
+
+    private boolean gcdIsConstant(FiniteField b) {
+
+        Polynomial p = b.getElement().euclid(b.getModulus());
+        return p.getDegree() == 0;
+
+    }
+
+
 
 
 
