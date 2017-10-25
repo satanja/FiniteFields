@@ -412,12 +412,9 @@ public class Polynomial  {
      * @return
      */
     public boolean isIrreducible() {
-
         if(this == null) {
             //raise null exception
         }
-
-
         int t = 0;
         ZmodP one = new ZmodP(1, F.getP());
         ZmodP negOne = new ZmodP (-1, F.getP());
@@ -435,12 +432,7 @@ public class Polynomial  {
             //h = gcd(this, g)
 
         } while(h.getDegree() == 0); //a unit returns degree 0, which means the gcd(this, g) = 1
-
-
         return t == this.getDegree();
-
-
-
     }
 
     /**

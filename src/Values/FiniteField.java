@@ -115,9 +115,60 @@ public class FiniteField {
 
     }
 
+    /**
+     * Returns all elements in the field
+     *
+     * @param degree
+     * @param mod
+     * @return
+     */
+    public Polynomial[] getClassRing(int degree, int mod){
+        int nrofElements = 1;
+        for(int i=0; i<degree; i++){
+            nrofElements *= mod;
+        }
+        Polynomial[] result = new Polynomial[nrofElements];
+        for(int n=0; n<nrofElements; n++) {
+            Polynomial poly = new Polynomial(new Monomial[]{},new ZmodP(0,2));;
+            for (int i = 0; i < degree; i++) {
+                Monomial m = new Monomial(new ZmodP((int)(n / ((Math.pow((double)mod,(double)i)))%mod), F.getP()), i);
+                poly = poly.add(new Polynomial(new Monomial[]{m}, F));
+            }
+            result[n] = poly;
+        }
+        return result;
+    }
 
+    public Polynomial[][] additionTable(){
+        Polynomial[] elements = getClassRing(this.f.getDegree(),this.F.getP());
+        Polynomial[][] table = new Polynomial[elements.length][elements.length];
+        for(int i=0; i<elements.length; i++){
+            for(int j=0; j<elements.length; j++){
+                table[i][j] = elements[i].add(elements[j]);
+            }
+        }
+        return table;
+    }
 
+    public Polynomial[][] multiplicationTable(){
+        Polynomial[] elements = getClassRing(this.f.getDegree(),this.F.getP());
+        Polynomial[][] table = new Polynomial[elements.length][elements.length];
+        for(int i=0; i<elements.length; i++){
+            for(int j=0; j<elements.length; j++){
+                FiniteField newField1 = new FiniteField(this.f,this.F,elements[i]);
+                FiniteField newField2 = new FiniteField(this.f,this.F,elements[j]);
+                FiniteField resultField = newField1.multiply(newField2);
+                table[i][j] = resultField.getElement();
 
+                System.out.printf("|");
+                for(Monomial m: table[i][j].getMonomials()){
+                    System.out.printf("%d*x^%d+",m.getCoefficient().getValue(),m.getExponent());
+                }
+            }
+            System.out.printf("\n----------------------\n");
+        }
+        return table;
+    }
 
 
 
