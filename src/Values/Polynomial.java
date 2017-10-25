@@ -86,6 +86,11 @@ public class Polynomial  {
                 monomialsListh.add(n);
             }
         }
+        /*
+        if (monomialsListh.size() == 0) {
+            monomialsListh.add(new Monomial(new ZmodP(0, this.getField().getP()), 0));
+        }
+        */
         Monomial[] monomialsh = convertListToArray(monomialsListh);
         return new Polynomial(monomialsh, this.F);
     }
@@ -195,7 +200,7 @@ public class Polynomial  {
      */
     public ZmodP getLc(){
         ZmodP coef = null;
-        int deg = 0;
+        int deg = -1;
         for(Monomial m : this.monomials){
             if(m.getExponent() > deg){
                 deg = m.getExponent();
@@ -229,10 +234,22 @@ public class Polynomial  {
         Polynomial r = this;
 
         while(r.getDegree() >= b.getDegree()){
-            ZmodP coef = new ZmodP(r.getLc().getValue()/b.getLc().getValue(), this.F.getP());
-            int deg = r.getDegree()-b.getDegree();
-            q = q.add(new Polynomial(new Monomial[]{new Monomial(coef,deg)}, q.getField()));
-            r = r.sub(b.multiply(new Polynomial(new Monomial[]{new Monomial(coef,deg)}, r.getField())));
+            ZmodP coef1 = new ZmodP(r.getLc().getValue(), this.F.getP());
+            ZmodP coef2 = new ZmodP(b.getLc().getValue(), this.F.getP());
+            ZmodP coef = coef1.div(coef2);
+            int deg = r.getDegree() - b.getDegree();
+
+            Polynomial s = new Polynomial(new Monomial[]{new Monomial(coef, deg)}, b.getField());
+
+            q = q.add(s);
+            r = r.sub(b.multiply(s));
+
+            if(r.getMonomials().length == 0) {
+                //r == null
+                break;
+            } else if (r.getDegree() == 0 && r.getMonomialAtIndex(0).getCoefficient().getValue() == 0) {
+                break;
+            }
         }
 
         return new PolyPair(q,r);
@@ -428,9 +445,12 @@ public class Polynomial  {
             monos[0] = new Monomial(one, power(F.getP(), t));
             monos[1] = new Monomial(negOne, 1);
             g = new Polynomial(monos, F);
-            //g = X^{q^t} - X
-            h = euclid(g);
-            //h = gcd(this, g)
+
+            if (g.getDegree() >= this.getDegree()) {
+                h = g.euclid(this);
+            } else {
+                h = this.euclid(g);
+            }
 
         } while(h.getDegree() == 0); //a unit returns degree 0, which means the gcd(this, g) = 1
         return t == this.getDegree();
