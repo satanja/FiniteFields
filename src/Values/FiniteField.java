@@ -144,7 +144,10 @@ public class FiniteField {
         Polynomial[][] table = new Polynomial[elements.length][elements.length];
         for(int i=0; i<elements.length; i++){
             for(int j=0; j<elements.length; j++){
-                table[i][j] = elements[i].add(elements[j]);
+                FiniteField newField1 = new FiniteField(this.f,this.F,elements[i]);
+                FiniteField newField2 = new FiniteField(this.f,this.F,elements[j]);
+                FiniteField resultField = newField1.add(newField2);
+                table[i][j] = resultField.getElement();
             }
         }
         return table;
