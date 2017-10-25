@@ -74,6 +74,7 @@ class PolynomialTest {
         Monomial mm2 = new Monomial(new ZmodP(1,2),2);
         Polynomial pm1 = new Polynomial(new Monomial[]{mm1,mm0}, mm1.getCoefficient());
         Polynomial pm2 = new Polynomial(new Monomial[]{mm2,mm0}, mm0.getCoefficient());
+
         testMultiply(pm1,pm1,pm2);
     }
 

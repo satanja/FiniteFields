@@ -94,8 +94,8 @@ public class Polynomial  {
     //TODO: Contract
     public Polynomial multiply(Polynomial g) {
 
+        Polynomial result = new Polynomial(new Monomial[]{},this.getField());
         Monomial[] monomialsg = g.getMonomials();
-        List<Monomial> monomialsListh = new ArrayList<Monomial>();
 
         for (Monomial mf: monomials)
         {
@@ -103,13 +103,12 @@ public class Polynomial  {
                 ZmodP cof = mf.getCoefficient().multiply(mg.getCoefficient());
                 if(cof.getValue() != 0) {
                     Monomial u = new Monomial(cof, mf.getExponent() + mg.getExponent());
-                    monomialsListh.add(u);
+                    result = result.add(new Polynomial(new Monomial[]{u},this.getField()));
                 }
             }
         }
 
-        Monomial[] monomialsh = convertListToArray(monomialsListh);
-        return new Polynomial(monomialsh, this.F);
+        return result;
     }
 
     //TODO: Contract
