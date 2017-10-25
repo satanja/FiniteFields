@@ -221,8 +221,9 @@ class PolynomialTest {
         ZmodP one = new ZmodP(1, 2);
         Monomial monoOne = new Monomial(one, 0);
         Monomial monoX = new Monomial(one, 1);
-        Monomial monoXsq = new Monomial(one, 3);
-        Monomial[] monos = new Monomial[]{monoOne, monoX, monoXsq};
+        Monomial monoXsq = new Monomial(one, 2);
+        Monomial monoXcb = new Monomial(one, 3);
+        Monomial[] monos = new Monomial[]{monoOne, monoXsq, monoXcb};
         Polynomial f = new Polynomial(monos, new ZmodP(1 , 2));
         System.out.println(f.isIrreducible());
         //testIsIrreducible(f, true);

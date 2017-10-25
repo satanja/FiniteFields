@@ -416,8 +416,8 @@ public class Polynomial  {
                 b.append("+ ");
             }
 
-            // Only draw the coefficient is it is not 1.
-            if (c != 1) {
+            //draw if c is the constant term, or if c != 1
+            if(e == 0 || c != 1) {
                 b.append(c);
             }
 
