@@ -123,18 +123,26 @@ class PolynomialTest {
         ZmodP one = new ZmodP(1, 2);
         Monomial monoOne = new Monomial(one, 0);
         Monomial monoX = new Monomial(one, 1);
-        Monomial monoXsq = new Monomial(one, 2);
+        Monomial monoXcb = new Monomial(one, 3);
+        Monomial monoX4 = new Monomial(one, 4);
 
-        Monomial[] monos = new Monomial[]{monoOne, monoX, monoXsq};
+        Monomial[] monos = new Monomial[]{monoOne, monoX, monoXcb};
         Polynomial f = new Polynomial(monos, new ZmodP(1 , 2));
 
-        monos = new Monomial[]{monoX, monoXsq};
+        monos = new Monomial[]{monoX, monoX4};
         Polynomial g = new Polynomial(monos, new ZmodP(1, 2));
 
-        Polynomial q = new Polynomial(new Monomial[]{monoOne}, f.getField());
-        Polynomial r = new Polynomial(new Monomial[]{monoOne}, f.getField());
+        //Polynomial q = new Polynomial(new Monomial[]{monoOne}, f.getField());
+        //Polynomial r = new Polynomial(new Monomial[]{monoOne}, f.getField());
 
-        g.longDivision(r);
+        Polynomial q = g.longDivision(f).getP1();
+        Polynomial r = g.longDivision(f).getP2();
+
+        q = r.longDivision(f).getP1();
+        r = r.longDivision(f).getP1();
+
+        int k = 0;
+
         //testLongDivision(f, g, new PolyPair(q, r));
 
 

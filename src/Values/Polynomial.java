@@ -61,7 +61,17 @@ public class Polynomial  {
         //Add everything in {@Code this}. If the element is not in g, add the element as it is in {@Code this}.
         for(Monomial m : monomials){
             if(!g.hasExponent(m) && m.getCoefficient().getValue() != 0){
-                monomialsListh.add(m);
+                if(negative) {
+
+                    ZmodP c = new ZmodP(-m.getCoefficient().getValue(), this.getField().getP());
+                    Monomial u = new Monomial(c, m.getExponent());
+                    monomialsListh.add(u);
+
+                } else {
+
+                    monomialsListh.add(m);
+                }
+
             } else {
                 for (Monomial n : monomialsg) {
                     if (m.getExponent() == n.getExponent()) {
@@ -86,11 +96,7 @@ public class Polynomial  {
                 monomialsListh.add(n);
             }
         }
-        /*
-        if (monomialsListh.size() == 0) {
-            monomialsListh.add(new Monomial(new ZmodP(0, this.getField().getP()), 0));
-        }
-        */
+
         Monomial[] monomialsh = convertListToArray(monomialsListh);
         return new Polynomial(monomialsh, this.F);
     }
@@ -158,8 +164,8 @@ public class Polynomial  {
                 return false;
             }
             // both polynomials have an equal number of monomials
-            g = g.sort(g);
-            Polynomial f = this.sort(this);
+            g = g.sort();
+            Polynomial f = this.sort();
             for(int i = 0; i < monomials.length; i++) {
                 if(f.getMonomialAtIndex(i).getExponent() != g.getMonomialAtIndex(i).getExponent()) {
                     return false;
@@ -349,16 +355,15 @@ public class Polynomial  {
     /**
      * Sorts the monomial list of the inputted polynomial in ascending order based on exponent
      *
-     * @param f Polynomial
-     * @return sorts the monomials in f in ascending order based on exponent
+     * @return sorts the monomials in this in ascending order based on exponent
      */
-    public Polynomial sort(Polynomial f) {
+    public Polynomial sort() {
 
 
-        Monomial[] result = f.getMonomials();
+        Monomial[] result = this.getMonomials();
 
         //insertion sort
-        for (int i = 1; i < f.getMonomials().length; i++) {
+        for (int i = 1; i < this.getMonomials().length; i++) {
 
             for(int j = i; j > 0; j--) {
 
@@ -371,7 +376,7 @@ public class Polynomial  {
             }
 
         }
-        return new Polynomial(result, f.getField());
+        return new Polynomial(result, this.getField());
 
     }
 
