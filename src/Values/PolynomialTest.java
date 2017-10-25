@@ -118,6 +118,24 @@ class PolynomialTest {
         testLongDivision(pl1,pl0,new PolyPair(pl2,pl3));
         testLongDivision(pl1,pl1,new PolyPair(new Polynomial(new Monomial[]{ml0},pl1.getField()),new Polynomial(new Monomial[]{},pl1.getField())));
         testLongDivision(pl4,pl4,new PolyPair(new Polynomial(new Monomial[]{ml5},pl4.getField()),new Polynomial(new Monomial[]{},pl4.getField())));
+
+        //X^2 + X / X^2 + X + 1
+        ZmodP one = new ZmodP(1, 2);
+        Monomial monoOne = new Monomial(one, 0);
+        Monomial monoX = new Monomial(one, 1);
+        Monomial monoXsq = new Monomial(one, 2);
+
+        Monomial[] monos = new Monomial[]{monoOne, monoX, monoXsq};
+        Polynomial f = new Polynomial(monos, new ZmodP(1 , 2));
+
+        monos = new Monomial[]{monoX, monoXsq};
+        Polynomial g = new Polynomial(monos, new ZmodP(1, 2));
+
+        Polynomial q = new Polynomial(new Monomial[]{monoOne}, f.getField());
+        Polynomial r = new Polynomial(new Monomial[]{monoOne}, f.getField());
+
+        testLongDivision(f, g, new PolyPair(q, r));
+
     }
 
     void testEuclid(Polynomial p, Polynomial q, Polynomial expected){
@@ -127,6 +145,23 @@ class PolynomialTest {
     @org.junit.jupiter.api.Test
     void euclid() {
         testEuclid(pl1,pl0,pl3);
+        //X^2 + X / X^2 + X + 1
+        ZmodP one = new ZmodP(1, 2);
+        Monomial monoOne = new Monomial(one, 0);
+        Monomial monoX = new Monomial(one, 1);
+        Monomial monoXsq = new Monomial(one, 2);
+
+        Monomial[] monos = new Monomial[]{monoOne, monoX, monoXsq};
+        Polynomial f = new Polynomial(monos, new ZmodP(1 , 2));
+
+        monos = new Monomial[]{monoX, monoXsq};
+        Polynomial g = new Polynomial(monos, new ZmodP(1, 2));
+
+        Polynomial q = new Polynomial(new Monomial[]{monoOne}, f.getField());
+        Polynomial r = new Polynomial(new Monomial[]{monoOne}, f.getField());
+
+        testEuclid(f, g, r);
+
     }
 
     void testExtendedEuclid(Polynomial p, Polynomial q, PolyPair expected){
@@ -168,5 +203,23 @@ class PolynomialTest {
 
     void testToString(Polynomial p, String e) {
         assertEquals(e, p.toString());
+    }
+
+    @Test
+    void isIrreducibleTest() {
+
+        ZmodP one = new ZmodP(1, 2);
+        Monomial monoOne = new Monomial(one, 0);
+        Monomial monoX = new Monomial(one, 1);
+        Monomial monoXsq = new Monomial(one, 2);
+        Monomial[] monos = new Monomial[]{monoOne, monoX, monoXsq};
+        Polynomial f = new Polynomial(monos, new ZmodP(1 , 2));
+        testIsIrreducible(f, true);
+    }
+
+    void testIsIrreducible(Polynomial f, boolean expected) {
+
+        assertTrue(f.isIrreducible() == expected);
+
     }
 }
