@@ -273,15 +273,23 @@ public class Polynomial  {
         if(this.getField().getP() != b.getField().getP()){
             throw new Values.Exceptions.PNotPrimeException("Not equal coefficient primes");
         }
-        Monomial[] mons = new Monomial[]{};
+        Polynomial a = this;
+        //Monomial[] mons = new Monomial[]{};
         Polynomial q;
-        while(b.getMonomials().length>0){
-            Polynomial r = longDivision(b).getP2();
-            mons = b.getMonomials();
+
+        while(b.getDegree() != 0 || b.getMonomialAtIndex(0).getCoefficient().getValue() != 0){
+
+            Polynomial r = a.longDivision(b).getP2();
+            a = b;
             b = r;
+
+            if (b == null || b.getMonomials().length <= 0) {
+                break;
+            }
+            // b's monomials can be indexed
         }
-        q = new Polynomial(mons,this.getField());
-        return q;
+
+        return a;
     }
 
     /**
