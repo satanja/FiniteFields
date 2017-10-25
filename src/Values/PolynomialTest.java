@@ -69,6 +69,12 @@ class PolynomialTest {
 
     @org.junit.jupiter.api.Test
     void multiply() {
+        Monomial mm0 = new Monomial(new ZmodP(1,2),0);
+        Monomial mm1 = new Monomial(new ZmodP(1,2),1);
+        Monomial mm2 = new Monomial(new ZmodP(1,2),2);
+        Polynomial pm1 = new Polynomial(new Monomial[]{mm1,mm0}, mm1.getCoefficient());
+        Polynomial pm2 = new Polynomial(new Monomial[]{mm2,mm0}, mm0.getCoefficient());
+        testMultiply(pm1,pm1,pm2);
     }
 
     @org.junit.jupiter.api.Test
@@ -137,7 +143,8 @@ class PolynomialTest {
 
     @org.junit.jupiter.api.Test
     void mod() {
-
+        Polynomial pm4 = new Polynomial(new Monomial[]{ml0,ml1,ml2}, ml0.getCoefficient());
+        assertTrue(pl3.multiply(pl3).mod(pm4).equals(pl2));
     }
 
     void testEqualMod(Polynomial p, Polynomial q, Polynomial mod, boolean expected){
