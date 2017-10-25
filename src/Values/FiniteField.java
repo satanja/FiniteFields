@@ -55,7 +55,7 @@ public class FiniteField {
         Polynomial g = element.add(b.getElement());
 
         if (g.getDegree() >= f.getDegree()) {
-            g.mod(f);
+            g = g.mod(f);
         }
 
         return new FiniteField(f, F, g);
@@ -68,7 +68,7 @@ public class FiniteField {
         Polynomial g = element.multiply(b.getElement());
 
         if (g.getDegree() >= f.getDegree()) {
-            g.mod(f);
+            g = g.mod(f);
         }
 
         return new FiniteField(f, F, g);
@@ -160,12 +160,7 @@ public class FiniteField {
                 FiniteField resultField = newField1.multiply(newField2);
                 table[i][j] = resultField.getElement();
 
-                System.out.printf("|");
-                for(Monomial m: table[i][j].getMonomials()){
-                    System.out.printf("%d*x^%d+",m.getCoefficient().getValue(),m.getExponent());
-                }
             }
-            System.out.printf("\n----------------------\n");
         }
         return table;
     }

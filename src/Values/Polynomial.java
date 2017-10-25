@@ -234,6 +234,7 @@ public class Polynomial  {
             q = q.add(new Polynomial(new Monomial[]{new Monomial(coef,deg)}, q.getField()));
             r = r.sub(b.multiply(new Polynomial(new Monomial[]{new Monomial(coef,deg)}, r.getField())));
         }
+
         return new PolyPair(q,r);
     }
 
