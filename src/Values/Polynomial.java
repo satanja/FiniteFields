@@ -4,6 +4,7 @@ import Values.Exceptions.PValuesNotEqualException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Polynomial  {
 
@@ -443,17 +444,31 @@ public class Polynomial  {
 
         //get the desired degree for the irreducible polynomial
         int deg = this.getDegree();
-        Polynomial g = null;
-        /*
+        Polynomial g;
+        Monomial[] monos = new Monomial[deg + 1];
+        ZmodP[] coefs = new ZmodP[deg + 1];
+        Random rand = new Random();
+
+
         do {
 
+            for (int i = 0; i < deg + 1; i++) {
 
+                //generate a random coefficient
+                coefs[i] = new ZmodP(rand.nextInt(F.getP()), F.getP());
 
+                //get all the monomials for a degree this.getDegree() polynomial
+                monos[i] = new Monomial(coefs[i], i);
 
-        } while (!g.isIrreducible());
+            }
+
+            //create new polynomial
+            g = new Polynomial(monos, F);
+
+        } while (!g.isIrreducible()); //test irreducibility
 
         //g is irreducible
-        */
+
         return g;
 
     }
