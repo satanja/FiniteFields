@@ -42,12 +42,16 @@ public class Main {
 
         // Add all the supported operations.
         input
-            .addOperation(new AddZmodP(input))
-            .addOperation(new SubZmodP(input))
-            .addOperation(new ProductZmodP(input))
-            .addOperation(new RemainderZmodP(input))
-            .addOperation(new DivZmodP(input))
-            .addOperation(new SumPoly(input))
+                .addOperation(new AddZmodP(input))
+                .addOperation(new SubZmodP(input))
+                .addOperation(new MultiplyZmodP(input))
+                .addOperation(new RemainderZmodP(input))
+                .addOperation(new DivZmodP(input))
+                .addOperation(new AddPoly(input))
+                .addOperation(new SubPoly(input))
+                .addOperation(new ModPoly(input))
+                .addOperation(new MultiplyPoly(input))
+                .addOperation(new DivPoly(input))
         ;
 
         input.read();

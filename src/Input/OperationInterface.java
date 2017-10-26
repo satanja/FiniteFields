@@ -8,4 +8,6 @@ public interface OperationInterface {
     Object calculate();
 
     void execute();
+
+    String computationOutput();
 }

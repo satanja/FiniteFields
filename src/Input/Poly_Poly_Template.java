@@ -18,11 +18,15 @@ public abstract class Poly_Poly_Template implements OperationInterface {
         System.out.println(input.getOutputPrefix() + getReturnDescription());
 
         a = input.readPolynomial("a");
+
+        System.out.println(input.getOutputPrefix() + "Successfully read polynomial a, as a = " + a.toString());
+
         b = input.readPolynomial("b");
 
+        System.out.println(input.getOutputPrefix() + "Successfully read polynomial a, as b = " + a.toString());
+
         try {
-            Polynomial result = calculate();
-            System.out.println(input.getOutputPrefix() + result.toString()); // Print the output is calculation was successful.
+            System.out.println(input.getOutputPrefix() + computationOutput()); // Print the output is calculation was successful.
         } catch (Exception e) {
             System.out.println(input.getOutputPrefix() + "FAILED: Computation failed, reason: '" + e.getMessage() + "'");
         }
@@ -37,5 +41,10 @@ public abstract class Poly_Poly_Template implements OperationInterface {
 
     protected abstract String getReturnValueDescription();
 
-    public abstract Polynomial calculate();
+    public abstract Object calculate();
+
+    @Override
+    public String computationOutput() {
+        return calculate().toString();
+    }
 }

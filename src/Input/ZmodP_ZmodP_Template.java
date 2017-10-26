@@ -22,8 +22,7 @@ public abstract class ZmodP_ZmodP_Template implements OperationInterface {
         b = input.readZmodP("b");
 
         try {
-            ZmodP result = calculate();
-            System.out.println(input.getOutputPrefix() + result.toString()); // Print the output is calculation was successfull.
+            System.out.println(input.getOutputPrefix() + computationOutput()); // Print the output is calculation was successfull.
         } catch (PValuesNotEqualException e) {
             System.out.println(input.getOutputPrefix() + "FAILED: The p values of both Values.ZmodP objects should be equal.");
         } catch (Exception e) {
@@ -41,4 +40,9 @@ public abstract class ZmodP_ZmodP_Template implements OperationInterface {
     protected abstract String getReturnValueDescription();
 
     public abstract ZmodP calculate();
+
+    @Override
+    public String computationOutput() {
+        return calculate().toString();
+    }
 }
