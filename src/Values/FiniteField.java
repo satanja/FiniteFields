@@ -49,6 +49,11 @@ public class FiniteField {
 
 
     public FiniteField add(FiniteField b) {
+		
+		//check if operations are allowed
+        if (!(b.getModulus().equals(this.getModulus()) && b.getField().equals(this.getField()))) {
+
+        }
 
         Polynomial g = element.add(b.getElement());
 
@@ -62,6 +67,11 @@ public class FiniteField {
     }
 
     public FiniteField multiply(FiniteField b) {
+		
+		//check if operations are allowed
+        if (!(b.getModulus().equals(this.getModulus()) && b.getField().equals(this.getField()))) {
+
+        }
 
         Polynomial g = element.multiply(b.getElement());
 
@@ -74,6 +84,11 @@ public class FiniteField {
     }
 
     public FiniteField qoutient(FiniteField b) {
+		
+		//check if operations are allowed
+        if (!(b.getModulus().equals(this.getModulus()) && b.getField().equals(this.getField()))) {
+
+        }
 
         if(b != null) {
 
@@ -107,6 +122,11 @@ public class FiniteField {
 
 
     private boolean gcdIsConstant(FiniteField b) {
+		
+		//check if operations are allowed
+        if (!(b.getModulus().equals(this.getModulus()) && b.getField().equals(this.getField()))) {
+
+        }
 
         Polynomial p = b.getElement().euclid(b.getModulus());
         return p.getDegree() == 0;
