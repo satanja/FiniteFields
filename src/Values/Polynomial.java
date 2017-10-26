@@ -233,16 +233,19 @@ public class Polynomial  {
      * Perform Long division on two Polynomials
      *
      * @param b polynomial
-     * @pre {@code this.getDegree() >= b.getDegree() && this.getField().getP() == b.getField().getP()}
+     * @pre {@code this.getDegree() >= b.getDegree() && this.getField().getP() == b.getField().getP() && this.lc % b.lc == 0}
      * @return PolyPair(q,r) where q is the quotient and r is the remainder
      * @throws Values.Exceptions.PNotPrimeException if {@code this.getField().getP() != b.getField().getP()}
      * @throws IllegalArgumentException if {@code this.getDegree() < b.getDegree()}
+     * @throws IllegalArgumentException if {@code this.lc % b.lc != 0}
      */
     public PolyPair longDivision(Polynomial b) throws IllegalArgumentException{
         if(this.getField().getP() != b.getField().getP()){
             throw new Values.Exceptions.PNotPrimeException("Not equal coefficient primes");
         } else if(this.getDegree() < b.getDegree()){
             throw new IllegalArgumentException("'this'.degree is smaller than b.degree: ("+this.getDegree()+"<"+b.getDegree()+")");
+        } else if((this.getLc().getValue()%b.getLc().getValue()) != 0){
+            throw new IllegalArgumentException("Leading coefficients are not divisible");
         }
 
         Polynomial q = new Polynomial(new Monomial[0], this.getField());
@@ -260,25 +263,16 @@ public class Polynomial  {
             Polynomial temp = b.multiply(s);
             r = r.sub(temp);
 
-
-
             //r can be empty
             //this means r = 0
             //so q does increase the next iteration, and r should not decrease
             //which means we are done
             if(r.getMonomials().length == 0) {
-
                 break;
-
             } else if (r.getDegree() == 0 && r.getMonomialAtIndex(0).getCoefficient().getValue() == 0) {
-
                 break;
             }
-
-
-
         }
-
         return new PolyPair(q,r);
     }
 
