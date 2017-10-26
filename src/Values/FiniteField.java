@@ -118,11 +118,12 @@ public class FiniteField {
     /**
      * Returns all elements in the field
      *
-     * @param degree
-     * @param mod
-     * @return
+     *
+     * @return residue class ring of {@code this}
      */
-    public Polynomial[] getClassRing(int degree, int mod){
+    public Polynomial[] getClassRing(){
+        int degree = this.f.getDegree();
+        int mod = this.F.getP();
         int nrofElements = 1;
         for(int i=0; i<degree; i++){
             nrofElements *= mod;
@@ -139,8 +140,12 @@ public class FiniteField {
         return result;
     }
 
+    /**
+     *
+     * @return addition table of {@code this}
+     */
     public Polynomial[][] additionTable(){
-        Polynomial[] elements = getClassRing(this.f.getDegree(),this.F.getP());
+        Polynomial[] elements = this.getClassRing();
         Polynomial[][] table = new Polynomial[elements.length][elements.length];
         for(int i=0; i<elements.length; i++){
             for(int j=0; j<elements.length; j++){
@@ -153,8 +158,12 @@ public class FiniteField {
         return table;
     }
 
+    /**
+     *
+     * @return multiplication table of {@code this}
+     */
     public Polynomial[][] multiplicationTable(){
-        Polynomial[] elements = getClassRing(this.f.getDegree(),this.F.getP());
+        Polynomial[] elements = this.getClassRing();
         Polynomial[][] table = new Polynomial[elements.length][elements.length];
         for(int i=0; i<elements.length; i++){
             for(int j=0; j<elements.length; j++){
