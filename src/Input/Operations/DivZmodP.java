@@ -11,7 +11,7 @@ public class DivZmodP extends ZmodP_ZmodP_Template {
 
     @Override
     public String getCommand() {
-        return "zmodp/multiply";
+        return "zmodp/div";
     }
 
     @Override
