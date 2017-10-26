@@ -3,7 +3,12 @@ package Values;
 import Values.Exceptions.PNotPrimeException;
 import Values.Exceptions.PValuesNotEqualException;
 
-/*
+/**
+ * Authors:
+ *
+ *
+ *
+ *
  * An immutable value object for objects in Z mod p.
  */
 public class ZmodP {
