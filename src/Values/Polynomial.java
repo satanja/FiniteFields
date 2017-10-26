@@ -471,10 +471,6 @@ public class Polynomial  {
 
     @Override
     public String toString() {
-        if (monomials.length == 0) {
-            return "";
-        }
-        
         StringBuilder b = new StringBuilder();
         Monomial[] monomials = getMonomials();
 
@@ -511,8 +507,13 @@ public class Polynomial  {
             }
         }
 
+        // Ensure that at least something prior to the mod is printed.
+        if (b.length() == 0) {
+            b.append("0 ");
+        }
+
         // Add the modulo part.
-        int p = monomials[0].getCoefficient().getP();
+        int p = getField().getP();
         b.append("mod ").append(p);
 
         return b.toString();
