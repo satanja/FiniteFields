@@ -322,6 +322,8 @@ public class Input {
             result = Integer.valueOf(s);
         } catch (IllegalStateException e) {
             throw new IllegalArgumentException();
+        } catch (NumberFormatException e) {
+            return 0;
         }
 
         return result;
