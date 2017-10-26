@@ -26,7 +26,7 @@ class FiniteFieldTest {
     }
 
     void testGetElements(FiniteField f, Polynomial[] p){
-        Polynomial[] result = f.getClassRing(f.getModulus().getDegree(),f.getField().getP());
+        Polynomial[] result = f.getClassRing();
         for(int i=0; i<result.length; i++){
             assertEquals(result[i],p[i]);
         }
