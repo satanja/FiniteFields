@@ -287,6 +287,8 @@ public class Polynomial  {
                 break;
             }
             // b's monomials can be indexed
+
+
         }
 
         return a;
@@ -460,11 +462,15 @@ public class Polynomial  {
             monos[1] = new Monomial(negOne, 1);
             g = new Polynomial(monos, F);
 
+            System.err.println("g = " + g.toString());
+            System.err.println("this = " + this.toString());
+
             if (g.getDegree() >= this.getDegree()) {
                 h = g.euclid(this);
             } else {
                 h = this.euclid(g);
             }
+
 
         } while(h.getDegree() == 0); //a unit returns degree 0, which means the gcd(this, g) = 1
         return t == this.getDegree();
@@ -479,30 +485,47 @@ public class Polynomial  {
         //get the desired degree for the irreducible polynomial
         int deg = this.getDegree();
         Polynomial g;
-        Monomial[] monos = new Monomial[deg + 1];
+
         ZmodP coef;
         Random rand = new Random();
 
 
         do {
 
+            //reset the monomials
+            List<Monomial> monomialsList = new ArrayList<Monomial>();
+
+
             //make a this.getDegree() order monomial
             coef = new ZmodP(rand.nextInt(F.getP() - 1) + 1, F.getP());
-            monos[deg] = new Monomial(coef, deg);
+            monomialsList.add(new Monomial(coef, deg));
+
 
 
             for (int i = deg - 1; i >= 0; i--) {
 
+                System.err.println("i = " + i);
+
                 //generate a random coefficient
                 coef = new ZmodP(rand.nextInt(F.getP()), F.getP());
 
-                //get all the monomials for a degree this.getDegree() polynomial
-                monos[i] = new Monomial(coef, i);
+
+                //only add if coefficient is not 0
+                if (coef.getValue() != 0) {
+
+                    monomialsList.add(new Monomial(coef, i));
+
+                }
+
 
             }
 
+            Monomial[] monos = convertListToArray(monomialsList);
             //create new polynomial
             g = new Polynomial(monos, F);
+            System.err.println("g = " + g.toString());
+
+
 
         } while (!g.isIrreducible()); //test irreducibility
 
