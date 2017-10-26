@@ -173,8 +173,14 @@ public class Input {
 
                 switch (splitted.length) {
                     case 0: // Apparently the empty string was passed.
-                        // Skip the empty string.
-                        continue;
+                        if (stringedMonomial.length() == 0) {
+                            // Skip the empty string
+                            continue;
+                        } else { // Else only "x" was passed.
+                            c = 1;
+                            e = 1;
+                            break;
+                        }
                     case 1: // Either the digit preceding or succeeding the x is not passed. Check which one it was.
                         int i = stringedMonomial.indexOf("x");
                         if (i == 0) { // Check if the preceding digit was not passed.
