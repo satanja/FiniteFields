@@ -18,9 +18,6 @@ public abstract class PolyIntTemplate implements OperationInterface {
         input.printOutput(getReturnDescription());
 
         a = input.readPolynomial("a");
-
-        input.printOutput("Successfully read polynomial a, as a = " + a.toString());
-
         b = input.readInt("b");
 
         input.printOutput("Successfully read integer b, as b = " + b);

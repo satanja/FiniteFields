@@ -18,12 +18,7 @@ public abstract class PolyPolyTemplate implements OperationInterface {
         input.printOutput(getReturnDescription());
 
         a = input.readPolynomial("a");
-
-        input.printOutput("Successfully read polynomial a, as a = " + a.toString());
-
         b = input.readPolynomial("b");
-
-        input.printOutput("Successfully read polynomial b, as b = " + a.toString());
 
         try {
             input.printOutput(computationOutput()); // Print the output is calculation was successful.

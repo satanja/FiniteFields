@@ -89,7 +89,11 @@ public class Input {
     int readInt(String name) {
         printInput("[" + name + "] Please enter an integer value.");
 
-        return scanner.nextInt();
+        int result = scanner.nextInt();
+
+        printOutput("Successfully read integer " + name + ", as " + name + " = " + result);
+
+        return result;
     }
 
     ZmodP readZmodP(String name) {
@@ -97,7 +101,7 @@ public class Input {
 
         Pattern pattern = Pattern.compile("[ 0]*([1-9]\\d*) *[mod]{1,3} *[ 0]*([1-9]\\d*)");
 
-        Matcher matches = null;
+        Matcher matches;
         do {
             try {
                 String nextLine = scanner.nextLine();
@@ -115,7 +119,10 @@ public class Input {
                 int value = Integer.valueOf(matches.group(1));
                 int p = Integer.valueOf(matches.group(2));
 
-                return new ZmodP(value, p);
+                ZmodP result = new ZmodP(value, p);
+                printOutput("Successfully ready ZmodP value " + name + ", with " + name + " = " + result);
+
+                return result;
             } catch (PNotPrimeException e) {
                 printOutput("P should be prime, please try again.");
             }
@@ -216,6 +223,7 @@ public class Input {
             result = new Polynomial(monomialsAsArray, new ZmodP(0, mod));
         }
 
+        printOutput("Successfully read polynomial " + name + ", as " + name + " = " + result.toString());
         return result;
     }
 
