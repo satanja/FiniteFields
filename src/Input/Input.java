@@ -89,9 +89,41 @@ public class Input {
     int readInt(String name) {
         printInput("[" + name + "] Please enter an integer value.");
 
-        int result = scanner.nextInt();
+        Integer result = null;
+        while (result==null) {
+            try {
+                result = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                printOutput("Illegal input for integer given, please try again");
+            }
+        }
 
         printOutput("Successfully read integer " + name + ", as " + name + " = " + result);
+
+        return result;
+    }
+
+    int readPrime(String name) {
+        printInput("[" + name + "] Please enter an integer value which is prime.");
+
+        Integer result = null;
+
+        while (result==null) {
+            try {
+                result = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                printOutput("Illegal input for integer given, please try again");
+                continue;
+            }
+
+            // Ensure that the input is prime.
+            if (! ZmodP.isPrime(result)) {
+                printOutput("Input is not prime, please try again.");
+                result = null;
+            }
+        }
+
+        printOutput("Successfully read prime " + name + ", as " + name + " = " + result);
 
         return result;
     }

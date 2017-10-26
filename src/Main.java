@@ -1,4 +1,5 @@
 import Input.Input;
+import Input.Operations.Poly.Irreducible;
 import Input.Operations.PolyInt.Scalar;
 import Input.Operations.PolyPoly.*;
 import Input.Operations.PolyPolyPoly.EquivalentInMod;
@@ -58,6 +59,7 @@ public class Main {
                 .addOperation(new Euclid(input))
                 .addOperation(new EuclidExtended(input))
                 .addOperation(new EquivalentInMod(input))
+                .addOperation(new Irreducible(input))
         ;
 
         input.read();
