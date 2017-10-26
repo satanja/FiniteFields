@@ -1,7 +1,11 @@
 package Values;
 
 /**
- * Created by s152124 on 10-10-2017.
+ * Authors:
+ *
+ *
+ *
+ *
  */
 public class Monomial implements Comparable<Monomial> {
 

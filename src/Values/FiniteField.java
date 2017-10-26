@@ -1,7 +1,11 @@
 package Values;
 
 /**
- * Created by s152124 on 10-10-2017.
+ * Authors:
+ * Wessel van der Heijden - 0951686
+ *
+ *
+ *
  */
 public class FiniteField {
 

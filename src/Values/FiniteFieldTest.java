@@ -3,7 +3,13 @@ package Values;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Authors:
+ * Wessel van der Heijden - 0951686
+ *
+ *
+ *
+ */
 class FiniteFieldTest {
     @Test
     void getOrder() {
