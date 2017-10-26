@@ -20,12 +20,12 @@ public abstract class PolyPolyPolyTemplate implements OperationInterface {
 
         a = input.readPolynomial("a");
         b = input.readPolynomial("b");
-        b = input.readPolynomial("c");
+        c = input.readPolynomial("c");
 
         try {
             input.printOutput(computationOutput()); // Print the output is calculation was successful.
         } catch (Exception e) {
-            input.printOutput("FAILED: Computation failed, reason: '" + e.getMessage() + "'");
+            input.printOutput("FAILED: Computation failed, reason: '" + e.getMessage() + "'\n" + e.toString());
         }
     }
 
