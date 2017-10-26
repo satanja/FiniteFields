@@ -98,6 +98,7 @@ public class Input {
                 result = scanner.nextInt();
             } catch (InputMismatchException e) {
                 printOutput("Illegal input for integer given, please try again");
+                scanner.nextLine();
             }
         }
 

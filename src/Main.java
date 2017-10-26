@@ -4,6 +4,8 @@ import Input.Operations.Poly.*;
 import Input.Operations.PolyInt.Scalar;
 import Input.Operations.PolyPoly.*;
 import Input.Operations.PolyPolyPoly.EquivalentInMod;
+import Input.Operations.PrimePoly.AdditionTable;
+import Input.Operations.PrimePoly.MultiplicationTable;
 import Input.Operations.ZmodpZmodp.*;
 
 import java.io.File;
@@ -62,6 +64,8 @@ public class Main {
                 .addOperation(new EquivalentInMod(input))
                 .addOperation(new Irreducible(input))
                 .addOperation(new Generate(input))
+                .addOperation(new AdditionTable(input))
+                .addOperation(new MultiplicationTable(input))
                 .addOperation(new Add(input))
                 .addOperation(new Product(input))
                 .addOperation(new Quotient(input))
