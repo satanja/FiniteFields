@@ -43,6 +43,6 @@ public abstract class ZmodpZmodpTemplate implements OperationInterface {
 
     @Override
     public String computationOutput() {
-        return calculate().toString();
+        return "Output: " + calculate().toString();
     }
 }

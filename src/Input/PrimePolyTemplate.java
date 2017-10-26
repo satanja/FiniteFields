@@ -9,7 +9,7 @@ public abstract class PrimePolyTemplate implements OperationInterface {
 
     private Input input;
     protected int p;
-    protected Polynomial q;
+    protected Polynomial q = null;
     protected FiniteField f;
 
     public PrimePolyTemplate(Input input) {
@@ -18,11 +18,20 @@ public abstract class PrimePolyTemplate implements OperationInterface {
 
     @Override
     public void execute() {
-        input.printOutput("Expects a polynomial q and a prime integer p as input.");
+        input.printOutput("Expects an irreducible polynomial q and a prime integer p as input.");
         input.printOutput(getReturnDescription());
 
         p = input.readPrime("p");
-        q = input.readPolynomial("q");
+
+        while (q == null) {
+            q = input.readPolynomial("q");
+
+            // Ensure that q is irreducible.
+            if (! q.isIrreducible()) {
+                input.printOutput("q is reducible, please give an irreducible polynomial.");
+                q = null;
+            }
+        }
 
         ZmodP one = new ZmodP(1, p);
         Monomial[] monoOne = new Monomial[]{new Monomial(one, 0)};
@@ -62,6 +71,6 @@ public abstract class PrimePolyTemplate implements OperationInterface {
             s.append("\n");
         }
 
-        return s.toString();
+        return "Output:\n" + s.toString();
     }
 }

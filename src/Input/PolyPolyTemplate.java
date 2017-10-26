@@ -40,6 +40,6 @@ public abstract class PolyPolyTemplate implements OperationInterface {
 
     @Override
     public String computationOutput() {
-        return calculate().toString();
+        return "Output: " + calculate().toString();
     }
 }
