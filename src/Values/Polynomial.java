@@ -102,6 +102,7 @@ public class Polynomial  {
                 }
             }
         }
+
         Monomial[] monomialsh = convertListToArray(monomialsListh);
         return new Polynomial(monomialsh, this.F);
     }
@@ -169,8 +170,8 @@ public class Polynomial  {
                 return false;
             }
             // both polynomials have an equal number of monomials
-            g = g.sort(g);
-            Polynomial f = this.sort(this);
+            g = g.sort();
+            Polynomial f = this.sort();
             for(int i = 0; i < monomials.length; i++) {
                 if(f.getMonomialAtIndex(i).getExponent() != g.getMonomialAtIndex(i).getExponent()) {
                     return false;
@@ -196,9 +197,9 @@ public class Polynomial  {
      * @return the degree of this
      */
     public int getDegree(){
-        int deg=0;
+        int deg = 0;
         for(Monomial m : this.monomials){
-            if(m.getExponent() > deg){
+            if(m.getExponent() > deg && m.getCoefficient().getValue() != 0){
                 deg = m.getExponent();
             }
         }
@@ -210,47 +211,85 @@ public class Polynomial  {
      * @return the leading coefficient of this polynomial
      */
     public ZmodP getLc(){
+
+
         ZmodP coef = null;
         int deg = -1;
+<<<<<<< HEAD
+=======
+
+>>>>>>> possible-fix
         for(Monomial m : this.monomials){
+
             if(m.getExponent() > deg){
+
                 deg = m.getExponent();
-                coef = m.getCoefficient();
+
+                if(m.getCoefficient().getValue() != 0) {
+                    coef = m.getCoefficient();
+                }
             }
         }
-        if(this.monomials == null || this.monomials.length < 1 || coef == null){
-            throw new IllegalArgumentException("Values.Monomial does not contain coefficients");
+
+        if(this.monomials == null) {
+            throw new IllegalArgumentException("monomials is null");
+        }
+
+        if (coef == null && this.monomials.length < 1) {
+
+            return new ZmodP(0, this.getField().getP());
+
         } else {
+
             return coef;
         }
+
     }
 
     /**
      * Perform Long division on two Polynomials
      *
      * @param b polynomial
-     * @pre {@code this.getDegree() >= b.getDegree() && this.getField().getP() == b.getField().getP()}
+     * @pre {@code this.getDegree() >= b.getDegree() && this.getField().getP() == b.getField().getP() && this.lc % b.lc == 0}
      * @return PolyPair(q,r) where q is the quotient and r is the remainder
      * @throws Values.Exceptions.PNotPrimeException if {@code this.getField().getP() != b.getField().getP()}
      * @throws IllegalArgumentException if {@code this.getDegree() < b.getDegree()}
+     * @throws IllegalArgumentException if {@code this.lc % b.lc != 0}
      */
     public PolyPair longDivision(Polynomial b) throws IllegalArgumentException{
         if(this.getField().getP() != b.getField().getP()){
             throw new Values.Exceptions.PNotPrimeException("Not equal coefficient primes");
         } else if(this.getDegree() < b.getDegree()){
             throw new IllegalArgumentException("'this'.degree is smaller than b.degree: ("+this.getDegree()+"<"+b.getDegree()+")");
+        } else if((this.getLc().getValue()%b.getLc().getValue()) != 0){
+            throw new IllegalArgumentException("Leading coefficients are not divisible");
         }
 
         Polynomial q = new Polynomial(new Monomial[0], this.getField());
         Polynomial r = this;
 
         while(r.getDegree() >= b.getDegree()){
-            ZmodP coef = new ZmodP(r.getLc().getValue()/b.getLc().getValue(), this.F.getP());
-            int deg = r.getDegree()-b.getDegree();
-            q = q.add(new Polynomial(new Monomial[]{new Monomial(coef,deg)}, q.getField()));
-            r = r.sub(b.multiply(new Polynomial(new Monomial[]{new Monomial(coef,deg)}, r.getField())));
-        }
+            ZmodP coef1 = new ZmodP(r.getLc().getValue(), this.F.getP());
+            ZmodP coef2 = new ZmodP(b.getLc().getValue(), this.F.getP());
+            ZmodP coef = coef1.div(coef2);
+            int deg = r.getDegree() - b.getDegree();
 
+            Polynomial s = new Polynomial(new Monomial[]{new Monomial(coef, deg)}, b.getField());
+
+            q = q.add(s);
+            Polynomial temp = b.multiply(s);
+            r = r.sub(temp);
+
+            //r can be empty
+            //this means r = 0
+            //so q does increase the next iteration, and r should not decrease
+            //which means we are done
+            if(r.getMonomials().length == 0) {
+                break;
+            } else if (r.getDegree() == 0 && r.getMonomialAtIndex(0).getCoefficient().getValue() == 0) {
+                break;
+            }
+        }
         return new PolyPair(q,r);
     }
 
@@ -266,16 +305,31 @@ public class Polynomial  {
         if(this.getField().getP() != b.getField().getP()){
             throw new Values.Exceptions.PNotPrimeException("Not equal coefficient primes");
         }
-        Monomial[] mons = new Monomial[]{};
+        Polynomial a = this;
+        //Monomial[] mons = new Monomial[]{};
         Polynomial q;
-        while(b.getMonomials().length>0){
-            Polynomial r = longDivision(b).getP2();
-            mons = b.getMonomials();
+
+        while(b.getDegree() != 0 || b.getMonomialAtIndex(0).getCoefficient().getValue() != 0){
+
+            Polynomial r = a.longDivision(b).getP2();
+            a = b;
             b = r;
+
+            if (b == null || b.getMonomials().length <= 0) {
+                break;
+            }
+            // b's monomials can be indexed
+
+
         }
+<<<<<<< HEAD
         q = new Polynomial(mons,this.getField());
 
         return q;
+=======
+
+        return a;
+>>>>>>> possible-fix
     }
 
     /**
@@ -354,16 +408,15 @@ public class Polynomial  {
     /**
      * Sorts the monomial list of the inputted polynomial in ascending order based on exponent
      *
-     * @param f Polynomial
-     * @return sorts the monomials in f in ascending order based on exponent
+     * @return sorts the monomials in this in ascending order based on exponent
      */
-    public Polynomial sort(Polynomial f) {
+    public Polynomial sort() {
 
 
-        Monomial[] result = f.getMonomials();
+        Monomial[] result = this.getMonomials();
 
         //insertion sort
-        for (int i = 1; i < f.getMonomials().length; i++) {
+        for (int i = 1; i < this.getMonomials().length; i++) {
 
             for(int j = i; j > 0; j--) {
 
@@ -376,7 +429,8 @@ public class Polynomial  {
             }
 
         }
-        return new Polynomial(result, f.getField());
+
+        return new Polynomial(result, this.getField());
 
     }
 
@@ -408,8 +462,8 @@ public class Polynomial  {
                 b.append("+ ");
             }
 
-            // Only draw the coefficient is it is not 1.
-            if (c != 1) {
+            //draw if c is the constant term, or if c != 1
+            if(e == 0 || c != 1) {
                 b.append(c);
             }
 
@@ -447,11 +501,15 @@ public class Polynomial  {
             monos[0] = new Monomial(one, power(F.getP(), t));
             monos[1] = new Monomial(negOne, 1);
             g = new Polynomial(monos, F);
-            //g = X^{q^t} - X
-            h = euclid(g);
-            //h = gcd(this, g)
 
-        } while(h.getDegree() == 0); //a unit returns degree 0, which means the gcd(this, g) = 1
+            if (g.getDegree() >= this.getDegree()) {
+                h = g.euclid(this);
+            } else {
+                h = this.euclid(g);
+            }
+
+
+        } while(h.getDegree() == 0 && t < this.getDegree() + 1); //a unit returns degree 0, which means the gcd(this, g) = 1
         return t == this.getDegree();
     }
 
@@ -464,23 +522,40 @@ public class Polynomial  {
         //get the desired degree for the irreducible polynomial
         int deg = this.getDegree();
         Polynomial g;
-        Monomial[] monos = new Monomial[deg + 1];
-        ZmodP[] coefs = new ZmodP[deg + 1];
+
+        ZmodP coef;
         Random rand = new Random();
 
 
         do {
 
-            for (int i = 0; i < deg + 1; i++) {
+            //reset the monomials
+            List<Monomial> monomialsList = new ArrayList<Monomial>();
+
+
+            //make a this.getDegree() order monomial
+            coef = new ZmodP(rand.nextInt(F.getP() - 1) + 1, F.getP());
+            monomialsList.add(new Monomial(coef, deg));
+
+
+
+            for (int i = deg - 1; i >= 0; i--) {
 
                 //generate a random coefficient
-                coefs[i] = new ZmodP(rand.nextInt(F.getP()), F.getP());
+                coef = new ZmodP(rand.nextInt(F.getP()), F.getP());
 
-                //get all the monomials for a degree this.getDegree() polynomial
-                monos[i] = new Monomial(coefs[i], i);
+
+                //only add if coefficient is not 0
+                if (coef.getValue() != 0) {
+
+                    monomialsList.add(new Monomial(coef, i));
+
+                }
+
 
             }
 
+            Monomial[] monos = convertListToArray(monomialsList);
             //create new polynomial
             g = new Polynomial(monos, F);
 

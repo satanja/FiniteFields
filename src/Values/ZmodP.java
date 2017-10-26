@@ -16,8 +16,13 @@ public class ZmodP {
         if (! isPrime(p)) {
             throw new PNotPrimeException("p should be prime");
         }
-        if (value >= p || value < 0) {
-            value = value % p;
+
+        while (value >= p) {
+            value -= p;
+        }
+
+        while (value < 0) {
+            value += p;
         }
 
         this.p = p;
