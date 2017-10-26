@@ -83,7 +83,13 @@ public class Polynomial  {
         //Add all elements which were not added yet (having an exponent which is not in {@Code this}).
         for(Monomial n : monomialsg){
             if(!this.hasExponent(n) && n.getCoefficient().getValue() != 0){
-                monomialsListh.add(n);
+                if(negative){
+                    ZmodP zero = new ZmodP(0,n.getCoefficient().getP());
+                    ZmodP value = zero.sub(n.getCoefficient());
+                    monomialsListh.add(new Monomial(value,n.getExponent()));
+                } else {
+                    monomialsListh.add(n);
+                }
             }
         }
         Monomial[] monomialsh = convertListToArray(monomialsListh);
@@ -195,7 +201,7 @@ public class Polynomial  {
      */
     public ZmodP getLc(){
         ZmodP coef = null;
-        int deg = 0;
+        int deg = -1;
         for(Monomial m : this.monomials){
             if(m.getExponent() > deg){
                 deg = m.getExponent();
@@ -258,6 +264,7 @@ public class Polynomial  {
             b = r;
         }
         q = new Polynomial(mons,this.getField());
+
         return q;
     }
 
