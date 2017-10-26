@@ -462,9 +462,6 @@ public class Polynomial  {
             monos[1] = new Monomial(negOne, 1);
             g = new Polynomial(monos, F);
 
-            System.err.println("g = " + g.toString());
-            System.err.println("this = " + this.toString());
-
             if (g.getDegree() >= this.getDegree()) {
                 h = g.euclid(this);
             } else {
@@ -504,8 +501,6 @@ public class Polynomial  {
 
             for (int i = deg - 1; i >= 0; i--) {
 
-                System.err.println("i = " + i);
-
                 //generate a random coefficient
                 coef = new ZmodP(rand.nextInt(F.getP()), F.getP());
 
@@ -523,9 +518,6 @@ public class Polynomial  {
             Monomial[] monos = convertListToArray(monomialsList);
             //create new polynomial
             g = new Polynomial(monos, F);
-            System.err.println("g = " + g.toString());
-
-
 
         } while (!g.isIrreducible()); //test irreducibility
 
