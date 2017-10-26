@@ -199,7 +199,8 @@ public class FiniteField {
         return table;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "(" + element + ") Z/" + F.getP() + " Z/(" + f + ")";
+    }
 }

@@ -1,6 +1,6 @@
 import Input.Input;
-import Input.Operations.Poly.Irreducible;
-import Input.Operations.Poly.Generate;
+import Input.Operations.FieldField.*;
+import Input.Operations.Poly.*;
 import Input.Operations.PolyInt.Scalar;
 import Input.Operations.PolyPoly.*;
 import Input.Operations.PolyPolyPoly.EquivalentInMod;
@@ -68,6 +68,9 @@ public class Main {
                 .addOperation(new EquivalentInMod(input))
                 .addOperation(new Irreducible(input))
                 .addOperation(new Generate(input))
+                .addOperation(new Add(input))
+                .addOperation(new Product(input))
+                .addOperation(new Quotient(input))
         ;
 
         input.read();

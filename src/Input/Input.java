@@ -294,13 +294,16 @@ public class Input {
     }
 
     FiniteField readField(String name) {
-        printInput("[" + name + "] Please enter the value of the field, it is constructed of two polynomials x and y, and an integer i.");
+        printInput("[" + name + "] Please enter the value of the field, it is constructed of two polynomials x and y, and an integer p. And results in a field 'x Z/pZ/y'");
 
-        Polynomial g = readPolynomial(name + "_x");
-        int field = readInt(name + "_i");
-        Polynomial a = readPolynomial(name + "_y");
+        Polynomial a = readPolynomial(name + "_x");
+        int field = readInt(name + "_p");
+        Polynomial g = readPolynomial(name + "_y");
+        FiniteField result = new FiniteField(g, new ZmodP(0, field), a);
 
-        return new FiniteField(g, new ZmodP(0, field), a);
+        printOutput("Read field " + name + " as '" + result.toString() + "'");
+
+        return result;
     }
 
     /**
