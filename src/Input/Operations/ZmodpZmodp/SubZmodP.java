@@ -1,26 +1,26 @@
-package Input.Operations.ZModP;
+package Input.Operations.ZmodpZmodp;
 
 import Input.Input;
-import Input.ZmodP_ZmodP_Template;
+import Input.ZmodpZmodpTemplate;
 import Values.ZmodP;
 
-public class DivZmodP extends ZmodP_ZmodP_Template {
-    public DivZmodP(Input input) {
+public class SubZmodP extends ZmodpZmodpTemplate {
+    public SubZmodP(Input input) {
         super(input);
     }
 
     @Override
     public String getCommand() {
-        return "zmodp/div";
+        return "zmodp/sub";
     }
 
     @Override
     public String getReturnValueDescription() {
-        return "(a / b) mod p";
+        return "(a - b) mod p";
     }
 
     @Override
     public ZmodP calculate() {
-        return a.div(b);
+        return a.sub(b);
     }
 }

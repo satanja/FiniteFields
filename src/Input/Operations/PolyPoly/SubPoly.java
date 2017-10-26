@@ -1,10 +1,10 @@
 package Input.Operations.PolyPoly;
 
 import Input.Input;
-import Input.Poly_Poly_Template;
+import Input.PolyPolyTemplate;
 import Values.Polynomial;
 
-public class SubPoly extends Poly_Poly_Template {
+public class SubPoly extends PolyPolyTemplate {
     public SubPoly(Input input) {
         super(input);
     }

@@ -1,6 +1,7 @@
 import Input.Input;
+import Input.Operations.PolyInt.Scalar;
 import Input.Operations.PolyPoly.*;
-import Input.Operations.ZModP.*;
+import Input.Operations.ZmodpZmodp.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -53,6 +54,7 @@ public class Main {
                 .addOperation(new ModPoly(input))
                 .addOperation(new MultiplyPoly(input))
                 .addOperation(new DivPoly(input))
+                .addOperation(new Scalar(input))
         ;
 
         input.read();

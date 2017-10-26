@@ -3,13 +3,13 @@ package Input;
 import Values.Exceptions.PValuesNotEqualException;
 import Values.ZmodP;
 
-public abstract class ZmodP_ZmodP_Template implements OperationInterface {
+public abstract class ZmodpZmodpTemplate implements OperationInterface {
 
     private Input input;
     protected ZmodP a;
     protected ZmodP b;
 
-    public ZmodP_ZmodP_Template(Input input) {
+    public ZmodpZmodpTemplate(Input input) {
         this.input = input;
     }
 

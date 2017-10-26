@@ -1,17 +1,17 @@
-package Input.Operations.PolyPoly;
+package Input.Operations.PolyInt;
 
 import Input.Input;
-import Input.PolyPolyTemplate;
+import Input.PolyIntTemplate;
 import Values.Polynomial;
 
-public class MultiplyPoly extends PolyPolyTemplate {
-    public MultiplyPoly(Input input) {
+public class Scalar extends PolyIntTemplate {
+    public Scalar(Input input) {
         super(input);
     }
 
     @Override
     public String getCommand() {
-        return "poly/mul";
+        return "poly/scalar";
     }
 
     @Override
@@ -21,6 +21,6 @@ public class MultiplyPoly extends PolyPolyTemplate {
 
     @Override
     public Polynomial calculate() {
-        return a.multiply(b);
+        return a.scarlarMultiply(b);
     }
 }

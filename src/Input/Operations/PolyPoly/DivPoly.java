@@ -1,10 +1,10 @@
 package Input.Operations.PolyPoly;
 
 import Input.Input;
-import Input.Poly_Poly_Template;
+import Input.PolyPolyTemplate;
 import Values.PolyPair;
 
-public class DivPoly extends Poly_Poly_Template {
+public class DivPoly extends PolyPolyTemplate {
     public DivPoly(Input input) {
         super(input);
     }

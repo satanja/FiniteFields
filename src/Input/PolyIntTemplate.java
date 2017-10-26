@@ -2,28 +2,28 @@ package Input;
 
 import Values.Polynomial;
 
-public abstract class Poly_Poly_Template implements OperationInterface {
+public abstract class PolyIntTemplate implements OperationInterface {
 
     private Input input;
     protected Polynomial a;
-    protected Polynomial b;
+    protected int b;
 
-    public Poly_Poly_Template(Input input) {
+    public PolyIntTemplate(Input input) {
         this.input = input;
     }
 
     @Override
     public void execute() {
-        input.printOutput("Expects two polynomials a and b as input.");
+        input.printOutput("Expects a polynomial a and an integer b as input.");
         input.printOutput(getReturnDescription());
 
         a = input.readPolynomial("a");
 
         input.printOutput("Successfully read polynomial a, as a = " + a.toString());
 
-        b = input.readPolynomial("b");
+        b = input.readInt("b");
 
-        input.printOutput("Successfully read polynomial a, as b = " + a.toString());
+        input.printOutput("Successfully read integer b, as b = " + b);
 
         try {
             input.printOutput(computationOutput()); // Print the output is calculation was successful.

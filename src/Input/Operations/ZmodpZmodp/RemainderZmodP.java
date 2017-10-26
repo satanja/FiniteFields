@@ -1,10 +1,10 @@
-package Input.Operations.ZModP;
+package Input.Operations.ZmodpZmodp;
 
 import Input.Input;
-import Input.ZmodP_ZmodP_Template;
+import Input.ZmodpZmodpTemplate;
 import Values.ZmodP;
 
-public class RemainderZmodP extends ZmodP_ZmodP_Template {
+public class RemainderZmodP extends ZmodpZmodpTemplate {
     public RemainderZmodP(Input input) {
         super(input);
     }

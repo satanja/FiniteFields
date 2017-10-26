@@ -5,10 +5,7 @@ import Values.Monomial;
 import Values.Polynomial;
 import Values.ZmodP;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,6 +86,12 @@ public class Input {
         }
     }
 
+    int readInt(String name) {
+        printInput("[" + name + "] Please enter an integer value.");
+
+        return scanner.nextInt();
+    }
+
     ZmodP readZmodP(String name) {
         printInput("[" + name + "] Please enter a Values.ZmodP value in the format 'Z mod P' with Z an integer and P a prime.");
 
@@ -154,7 +157,7 @@ public class Input {
 
             // Retrieve the monomials.
             String[] monomialsString = polynomials.split("\\+");
-            Stack<Monomial> monomials = new Stack<>();
+            Map<Integer, Monomial> monomials = new HashMap<>();
             boolean readMonomialsSuccessful = true;
             for(String stringedMonomial : monomialsString) {
                 String[] splitted = stringedMonomial.split("x");
@@ -190,8 +193,15 @@ public class Input {
                         continue;
                 }
 
-                Monomial m = new Monomial(new ZmodP(c, mod), e);
-                monomials.push(m);
+                // Retrieve the monomial with the same exponent, if it was already set.
+                Monomial m = monomials.get(e);
+
+                if (m != null) { // Merge the values of both monomials if one with the same exponent was already present.
+                    c += m.getCoefficient().getValue();
+                }
+
+                m = new Monomial(new ZmodP(c, mod), e);
+                monomials.put(e, m);
             }
 
             // Check if the monomial was read successfully, if not allow the user to retry.
@@ -201,7 +211,7 @@ public class Input {
             }
 
             Monomial[] monomialsAsArray = new Monomial[monomials.size()];
-            monomials.toArray(monomialsAsArray);
+            monomials.values().toArray(monomialsAsArray);
 
             result = new Polynomial(monomialsAsArray, new ZmodP(0, mod));
         }
