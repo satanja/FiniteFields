@@ -40,6 +40,17 @@ public class Polynomial  {
         return false;
     }
 
+    public boolean hasMonomial(Monomial m) {
+        for(Monomial thisM : this.getMonomials()){
+
+            if(thisM.getExponent() == m.getExponent() && thisM.getCoefficient() == m.getCoefficient()){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
 
     public Polynomial add(Polynomial g) {
         return add(g,false);
@@ -166,34 +177,32 @@ public class Polynomial  {
         }
         if(obj instanceof Polynomial) {
             Polynomial g = (Polynomial) obj; //down cast
-            if (g.getMonomials().length != monomials.length) {
+
+            if (g.getField().getP() != getField().getP()) {
                 return false;
             }
-            // both polynomials have an equal number of monomials
+           
             g = g.sort();
             Polynomial f = this.sort();
-            int j = 0;
-            for(int i = 0; i < monomials.length; i++) {
 
-                if(g.getMonomialAtIndex(j).getCoefficient().getValue() == 0) {
-                    j++;
-                }
+            for (Monomial m: g.getMonomials()) {
 
-                if(f.getMonomialAtIndex(i).getCoefficient().getValue() == 0) {
-                    continue;
-                }
-                
-                if(f.getMonomialAtIndex(i).getExponent() != g.getMonomialAtIndex(j).getExponent()) {
+                if (!f.hasMonomial(m) && m.getCoefficient().getValue() != 0) {
                     return false;
                 }
-                //both monomials have the same exponent
-                if(!f.getMonomialAtIndex(i).getCoefficient().equals(g.getMonomialAtIndex(j).getCoefficient())) {
+
+            } //all monomials in g are in f
+
+            for (Monomial m: f.getMonomials()) {
+
+                if (!g.hasMonomial(m) && m.getCoefficient().getValue() != 0) {
                     return false;
                 }
-                //both monomials with the same exponent have the same coefficient
-                j++;
-            }
-            //both polynomials have an equal number of monomials, and for each monomial they are identical.
+
+            } //all monomials in f are in g
+
+            //both polynomials are equal
+
             if(this.hashCode() != g.hashCode()) {
                 return false;
             }
