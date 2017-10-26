@@ -5,7 +5,7 @@ import Values.Exceptions.PValuesNotEqualException;
 
 /**
  * Authors:
- *
+ * Stefan Tanja - 0955022
  *
  *
  *

@@ -5,7 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Created by s152124 on 17-10-2017.
+ * Authors:
+ *
+ *
+ *
+ *
  */
 class ZmodPTest {
 

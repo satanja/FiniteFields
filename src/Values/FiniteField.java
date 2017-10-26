@@ -3,7 +3,7 @@ package Values;
 /**
  * Authors:
  * Wessel van der Heijden - 0951686
- *
+ * Stefan Tanja - 0955022
  *
  *
  */
@@ -57,6 +57,8 @@ public class FiniteField {
 		//check if operations are allowed
         if (!(b.getModulus().equals(this.getModulus()) && b.getField().equals(this.getField()))) {
 
+            throw new IllegalArgumentException("Elements are not part of the the same finite field");
+
         }
 
         Polynomial g = element.add(b.getElement());
@@ -74,7 +76,7 @@ public class FiniteField {
 		
 		//check if operations are allowed
         if (!(b.getModulus().equals(this.getModulus()) && b.getField().equals(this.getField()))) {
-
+            throw new IllegalArgumentException("Elements are not part of the the same finite field");
         }
 
         Polynomial g = element.multiply(b.getElement());
@@ -91,7 +93,7 @@ public class FiniteField {
 		
 		//check if operations are allowed
         if (!(b.getModulus().equals(this.getModulus()) && b.getField().equals(this.getField()))) {
-
+            throw new IllegalArgumentException("Elements are not part of the the same finite field");
         }
 
         if(b != null) {
@@ -129,7 +131,7 @@ public class FiniteField {
 		
 		//check if operations are allowed
         if (!(b.getModulus().equals(this.getModulus()) && b.getField().equals(this.getField()))) {
-
+            throw new IllegalArgumentException("Elements are not part of the the same finite field");
         }
 
         Polynomial p = b.getElement().euclid(b.getModulus());
@@ -152,7 +154,7 @@ public class FiniteField {
         }
         Polynomial[] result = new Polynomial[nrofElements];
         for(int n=0; n<nrofElements; n++) {
-            Polynomial poly = new Polynomial(new Monomial[]{},new ZmodP(0,2));;
+            Polynomial poly = new Polynomial(new Monomial[]{},new ZmodP(0,this.getField().getP()));;
             for (int i = 0; i < degree; i++) {
                 Monomial m = new Monomial(new ZmodP((int)(n / ((Math.pow((double)mod,(double)i)))%mod), F.getP()), i);
                 poly = poly.add(new Polynomial(new Monomial[]{m}, F));

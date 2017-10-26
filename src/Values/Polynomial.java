@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * Authors:
  * Wessel van der Heijden - 0951686
- *
+ * Stefan Tanja - 0955022
  *
  *
  */
