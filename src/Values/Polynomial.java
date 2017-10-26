@@ -61,16 +61,8 @@ public class Polynomial  {
         //Add everything in {@Code this}. If the element is not in g, add the element as it is in {@Code this}.
         for(Monomial m : monomials){
             if(!g.hasExponent(m) && m.getCoefficient().getValue() != 0){
-                if(negative) {
-
-                    ZmodP c = new ZmodP(-m.getCoefficient().getValue(), this.getField().getP());
-                    Monomial u = new Monomial(c, m.getExponent());
-                    monomialsListh.add(u);
-
-                } else {
 
                     monomialsListh.add(m);
-                }
 
             } else {
                 for (Monomial n : monomialsg) {
@@ -265,7 +257,8 @@ public class Polynomial  {
             Polynomial s = new Polynomial(new Monomial[]{new Monomial(coef, deg)}, b.getField());
 
             q = q.add(s);
-            r = r.sub(b.multiply(s));
+            Polynomial temp = b.multiply(s);
+            r = r.sub(temp);
 
 
 
