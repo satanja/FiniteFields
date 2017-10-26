@@ -205,19 +205,36 @@ public class Polynomial  {
      * @return the leading coefficient of this polynomial
      */
     public ZmodP getLc(){
+
+
         ZmodP coef = null;
         int deg = -1;
+
         for(Monomial m : this.monomials){
+
             if(m.getExponent() > deg){
+
                 deg = m.getExponent();
-                coef = m.getCoefficient();
+
+                if(m.getCoefficient().getValue() != 0) {
+                    coef = m.getCoefficient();
+                }
             }
         }
-        if(this.monomials == null || this.monomials.length < 1 || coef == null){
-            throw new IllegalArgumentException("Values.Monomial does not contain coefficients");
+
+        if(this.monomials == null) {
+            throw new IllegalArgumentException("monomials is null");
+        }
+
+        if (coef == null && this.monomials.length < 1) {
+
+            return new ZmodP(0, this.getField().getP());
+
         } else {
+
             return coef;
         }
+
     }
 
     /**
@@ -251,6 +268,7 @@ public class Polynomial  {
             r = r.sub(b.multiply(s));
 
 
+
             //r can be empty
             //this means r = 0
             //so q does increase the next iteration, and r should not decrease
@@ -263,6 +281,7 @@ public class Polynomial  {
 
                 break;
             }
+
 
 
         }
