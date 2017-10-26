@@ -184,9 +184,24 @@ public class Polynomial  {
         if(obj instanceof Polynomial) {
             Polynomial g = (Polynomial) obj; //down cast
 
+
             if (g.getField().getP() != getField().getP()) {
                 return false;
             }
+
+            if (g.getMonomials().length == 0 && monomials.length == 0) {
+                //both are the zero Polynomial
+                return true;
+            } else if (g.getMonomials().length == 0 && monomials.length > 0) {
+                //one is the zero polynomial but the other isn't
+                return false;
+            } else if (g.getMonomials().length >= 0 && monomials.length == 0) {
+                //one is the zero polynomial but the other isn't
+                return  false;
+            }
+
+            //both polynomials have at least one monomial
+
            
             g = g.sort();
             Polynomial f = this.sort();
