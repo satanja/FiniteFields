@@ -421,9 +421,6 @@ public class Polynomial  {
      * @return
      */
     public boolean isIrreducible() {
-        if(this == null) {
-            //raise null exception
-        }
         int t = 0;
         ZmodP one = new ZmodP(1, F.getP());
         ZmodP negOne = new ZmodP (-1, F.getP());
