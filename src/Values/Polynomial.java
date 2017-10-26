@@ -5,7 +5,13 @@ import Values.Exceptions.PValuesNotEqualException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+/**
+ * Authors:
+ * Wessel van der Heijden - 0951686
+ *
+ *
+ *
+ */
 public class Polynomial  {
 
     private ZmodP F;

@@ -31,7 +31,7 @@ public abstract class FieldFieldTemplate implements OperationInterface {
 
     @Override
     public String getReturnDescription() {
-        return getReturnValueDescription();
+        return "Returns a field with value " + getReturnValueDescription();
     }
 
     protected abstract String getReturnValueDescription();

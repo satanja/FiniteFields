@@ -4,7 +4,13 @@ package Values;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Authors:
+ * Wessel van der Heijden - 0951686
+ *
+ *
+ *
+ */
 class PolynomialTest {
     Monomial m0 = new Monomial(new ZmodP(1,2),3);
     Monomial m1 = new Monomial(new ZmodP(2,2),4);
