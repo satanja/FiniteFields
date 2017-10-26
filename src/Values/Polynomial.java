@@ -215,10 +215,6 @@ public class Polynomial  {
 
         ZmodP coef = null;
         int deg = -1;
-<<<<<<< HEAD
-=======
-
->>>>>>> possible-fix
         for(Monomial m : this.monomials){
 
             if(m.getExponent() > deg){
@@ -322,14 +318,7 @@ public class Polynomial  {
 
 
         }
-<<<<<<< HEAD
-        q = new Polynomial(mons,this.getField());
-
-        return q;
-=======
-
         return a;
->>>>>>> possible-fix
     }
 
     /**
