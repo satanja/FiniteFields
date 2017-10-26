@@ -40,6 +40,6 @@ public abstract class PrimeFieldTemplate implements OperationInterface {
 
     @Override
     public String computationOutput() {
-        return calculate().toString();
+        return "Output: " + calculate().toString();
     }
 }
