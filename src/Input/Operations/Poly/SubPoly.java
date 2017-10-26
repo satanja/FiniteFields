@@ -1,4 +1,4 @@
-package Input.Operations;
+package Input.Operations.Poly;
 
 import Input.Input;
 import Input.Poly_Poly_Template;

@@ -1,5 +1,6 @@
 import Input.Input;
-import Input.Operations.*;
+import Input.Operations.Poly.*;
+import Input.Operations.ZModP.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;

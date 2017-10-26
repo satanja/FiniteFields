@@ -1,26 +1,26 @@
-package Input.Operations;
+package Input.Operations.ZModP;
 
 import Input.Input;
 import Input.ZmodP_ZmodP_Template;
 import Values.ZmodP;
 
-public class RemainderZmodP extends ZmodP_ZmodP_Template {
-    public RemainderZmodP(Input input) {
+public class DivZmodP extends ZmodP_ZmodP_Template {
+    public DivZmodP(Input input) {
         super(input);
     }
 
     @Override
     public String getCommand() {
-        return "zmodp/remainder";
+        return "zmodp/div";
     }
 
     @Override
     public String getReturnValueDescription() {
-        return "(a % b) mod p";
+        return "(a / b) mod p";
     }
 
     @Override
     public ZmodP calculate() {
-        return a.remainder(b);
+        return a.div(b);
     }
 }

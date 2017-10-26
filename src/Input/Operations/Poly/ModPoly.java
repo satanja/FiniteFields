@@ -1,26 +1,26 @@
-package Input.Operations;
+package Input.Operations.Poly;
 
 import Input.Input;
 import Input.Poly_Poly_Template;
 import Values.Polynomial;
 
-public class AddPoly extends Poly_Poly_Template {
-    public AddPoly(Input input) {
+public class ModPoly extends Poly_Poly_Template {
+    public ModPoly(Input input) {
         super(input);
     }
 
     @Override
     public String getCommand() {
-        return "poly/add";
+        return "poly/mod";
     }
 
     @Override
     public String getReturnValueDescription() {
-        return "a + b";
+        return "a mod b";
     }
 
     @Override
     public Polynomial calculate() {
-        return a.add(b);
+        return a.mod(b);
     }
 }

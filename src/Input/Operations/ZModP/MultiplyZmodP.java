@@ -1,4 +1,4 @@
-package Input.Operations;
+package Input.Operations.ZModP;
 
 import Input.Input;
 import Input.ZmodP_ZmodP_Template;
