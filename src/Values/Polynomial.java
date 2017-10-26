@@ -283,11 +283,12 @@ public class Polynomial  {
         Polynomial v = new Polynomial(new Monomial[] {new Monomial(new ZmodP(1,this.getField().getP()),0)},this.getField());
         Polynomial y = new Polynomial(new Monomial[0],this.getField());
         Polynomial u = new Polynomial(new Monomial[0],this.getField());
+        Polynomial thisObject = this;
 
         while(b.getMonomials().length>0){
-            PolyPair qAndR = this.longDivision(b);
+            PolyPair qAndR = thisObject.longDivision(b);
             Polynomial q = qAndR.getP1();
-            this.monomials = b.getMonomials();
+            thisObject = new Polynomial(b.getMonomials(),thisObject.getField());
             b = qAndR.getP2();
             Polynomial xPrime = x;
             Polynomial yPrime = y;
