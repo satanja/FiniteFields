@@ -61,10 +61,10 @@ public abstract class PrimePolyTemplate implements OperationInterface {
         Polynomial[][] result = (Polynomial[][]) calculate();
         StringBuilder s = new StringBuilder();
 
-        for (int i = 0; i < result.length; i++) {
+        for (Polynomial[] row : result) {
             s.append("|");
-            for (int j = 0; j < result[i].length; j++) {
-                s.append(result[i][j]);
+            for (Polynomial cell : row) {
+                s.append(cell);
                 s.append("|");
             }
 
