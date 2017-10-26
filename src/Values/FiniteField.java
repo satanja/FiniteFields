@@ -154,7 +154,7 @@ public class FiniteField {
         }
         Polynomial[] result = new Polynomial[nrofElements];
         for(int n=0; n<nrofElements; n++) {
-            Polynomial poly = new Polynomial(new Monomial[]{},new ZmodP(0,2));;
+            Polynomial poly = new Polynomial(new Monomial[]{},new ZmodP(0,this.getField().getP()));;
             for (int i = 0; i < degree; i++) {
                 Monomial m = new Monomial(new ZmodP((int)(n / ((Math.pow((double)mod,(double)i)))%mod), F.getP()), i);
                 poly = poly.add(new Polynomial(new Monomial[]{m}, F));

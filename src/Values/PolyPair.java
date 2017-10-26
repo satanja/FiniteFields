@@ -1,5 +1,11 @@
 package Values;
-
+/**
+ * Authors:
+ * Wessel van der Heijden - 0951686
+ *
+ *
+ *
+ */
 public class PolyPair {
     private  Polynomial p1;
     private  Polynomial p2;
