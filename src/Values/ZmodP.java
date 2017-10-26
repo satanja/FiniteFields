@@ -155,7 +155,7 @@ public class ZmodP {
      * @param n The value to be checked.
      * @return True if n is prime, else false.
      */
-    public static boolean isPrime(int n) {
+    public static boolean isPrime(long n) {
         if (n <= 1) {
             return false;
         } else if (n <= 3) {

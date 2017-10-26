@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 
 public class Input {
 
+    public static final int MAX_PRIME_VALUE = 109;
+    public static final int MAX_DEGREE = 9;
     private Scanner scanner;
     private ArrayList<OperationInterface> operations;
     final private String inputPrefix = " < ";
@@ -120,6 +122,13 @@ public class Input {
             if (! ZmodP.isPrime(result)) {
                 printOutput("Input is not prime, please try again.");
                 result = null;
+                continue;
+            }
+
+            if (result > MAX_PRIME_VALUE) {
+                printOutput("Prime should be smaller than " + MAX_PRIME_VALUE + ", please try again.");
+                result = null;
+                continue;
             }
         }
 
@@ -194,11 +203,20 @@ public class Input {
                 continue;
             }
 
+            if (! ZmodP.isPrime(mod)) {
+                printOutput("Modulo should be prime.");
+                continue;
+            }
+
             // Retrieve the monomials.
             String[] monomialsString = polynomials.split("\\+");
             Map<Integer, Monomial> monomials = new HashMap<>();
             boolean readMonomialsSuccessful = true;
             for(String stringedMonomial : monomialsString) {
+                if (! readMonomialsSuccessful) {
+                    break;
+                }
+
                 String[] splitted = stringedMonomial.split("x");
                 int c;
                 int e;
@@ -225,6 +243,7 @@ public class Input {
                             c = stringWithWhitespaceToInt(stringedMonomial);
                             e = 0;
                         } else { // This should not happen.
+                            printOutput("Something went wrong when reading your polynomial, please check the syntax and try again.");
                             readMonomialsSuccessful = false;
                             continue;
                         }
@@ -235,7 +254,16 @@ public class Input {
                         break;
                     default: // This should never happen.
                         readMonomialsSuccessful = false;
+                        printOutput("Something went wrong when reading your polynomial, please check the syntax and try again.");
                         continue;
+                }
+
+
+                // Ensure
+                if (e > MAX_DEGREE) {
+                    printOutput("The degree should not exceed " + MAX_DEGREE + ", pelase try again.");
+                    readMonomialsSuccessful = false;
+                    break;
                 }
 
                 // Retrieve the monomial with the same exponent, if it was already set.
@@ -251,7 +279,6 @@ public class Input {
 
             // Check if the monomial was read successfully, if not allow the user to retry.
             if (!readMonomialsSuccessful) {
-                printOutput("Something went wrong when reading your polynomial, pleasy check the syntax and try again.");
                 continue;
             }
 
