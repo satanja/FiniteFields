@@ -123,23 +123,23 @@ class PolynomialTest {
         ZmodP one = new ZmodP(1, 2);
         Monomial monoOne = new Monomial(one, 0);
         Monomial monoX = new Monomial(one, 1);
+        Monomial monoXsq = new Monomial(one, 2);
         Monomial monoXcb = new Monomial(one, 3);
         Monomial monoX4 = new Monomial(one, 4);
 
-        Monomial[] monos = new Monomial[]{monoOne, monoX, monoXcb};
+        Monomial[] monos = new Monomial[]{monoXsq, monoX};
         Polynomial f = new Polynomial(monos, new ZmodP(1 , 2));
 
-        monos = new Monomial[]{monoX, monoX4};
+        monos = new Monomial[]{monoOne};
         Polynomial g = new Polynomial(monos, new ZmodP(1, 2));
 
-        //Polynomial q = new Polynomial(new Monomial[]{monoOne}, f.getField());
-        //Polynomial r = new Polynomial(new Monomial[]{monoOne}, f.getField());
 
-        Polynomial q = g.longDivision(f).getP1();
-        Polynomial r = g.longDivision(f).getP2();
 
-        q = r.longDivision(f).getP1();
-        r = r.longDivision(f).getP1();
+        //remainder is equal to 0, so a crash is expected
+        f.longDivision(g);
+
+
+        //r = r.longDivision(f).getP1();
 
         int k = 0;
 
@@ -218,13 +218,16 @@ class PolynomialTest {
     @Test
     void isIrreducibleTest() {
 
-        ZmodP one = new ZmodP(1, 3);
+        ZmodP one = new ZmodP(1, 2);
         Monomial monoOne = new Monomial(one, 0);
         Monomial monoX = new Monomial(one, 2);
         Monomial monoXsq = new Monomial(one, 2);
         Monomial monoXcb = new Monomial(one, 3);
         Monomial[] monos = new Monomial[]{monoOne, monoXsq, monoXcb};
-        Polynomial f = new Polynomial(monos, new ZmodP(1 , 3));
+        Polynomial f = new Polynomial(monos, new ZmodP(1 , 2));
+
+        //f = 1 + X + X^2
+
         System.out.println(f.isIrreducible());
         //testIsIrreducible(f, true);
     }

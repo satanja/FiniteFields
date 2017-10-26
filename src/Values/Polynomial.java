@@ -250,12 +250,21 @@ public class Polynomial  {
             q = q.add(s);
             r = r.sub(b.multiply(s));
 
+
+            //r can be empty
+            //this means r = 0
+            //so q does increase the next iteration, and r should not decrease
+            //which means we are done
             if(r.getMonomials().length == 0) {
-                //r == null
+
                 break;
+
             } else if (r.getDegree() == 0 && r.getMonomialAtIndex(0).getCoefficient().getValue() == 0) {
+
                 break;
             }
+
+
         }
 
         return new PolyPair(q,r);
