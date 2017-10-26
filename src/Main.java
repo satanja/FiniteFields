@@ -51,10 +51,11 @@ public class Main {
                 .addOperation(new DivZmodP(input))
                 .addOperation(new AddPoly(input))
                 .addOperation(new SubPoly(input))
-                .addOperation(new ModPoly(input))
                 .addOperation(new MultiplyPoly(input))
                 .addOperation(new DivPoly(input))
                 .addOperation(new Scalar(input))
+                .addOperation(new Euclid(input))
+                .addOperation(new EuclidExtended(input))
         ;
 
         input.read();

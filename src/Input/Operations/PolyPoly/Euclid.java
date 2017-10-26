@@ -4,23 +4,23 @@ import Input.Input;
 import Input.PolyPolyTemplate;
 import Values.Polynomial;
 
-public class ModPoly extends PolyPolyTemplate {
-    public ModPoly(Input input) {
+public class Euclid extends PolyPolyTemplate {
+    public Euclid(Input input) {
         super(input);
     }
 
     @Override
     public String getCommand() {
-        return "poly/mod";
+        return "poly/euclid";
     }
 
     @Override
     public String getReturnValueDescription() {
-        return "a mod b";
+        return "gcd(a,b)";
     }
 
     @Override
     public Polynomial calculate() {
-        return a.mod(b);
+        return a.euclid(b);
     }
 }
