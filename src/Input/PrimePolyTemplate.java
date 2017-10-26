@@ -42,6 +42,7 @@ public abstract class PrimePolyTemplate implements OperationInterface {
             input.printOutput(computationOutput()); // Print the output is calculation was successful.
         } catch (Exception e) {
             input.printOutput("FAILED: Computation failed, reason: '" + e.getMessage() + "'");
+            throw e;
         }
     }
 

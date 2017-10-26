@@ -471,6 +471,10 @@ public class Polynomial  {
 
     @Override
     public String toString() {
+        if (monomials.length == 0) {
+            return "";
+        }
+        
         StringBuilder b = new StringBuilder();
         Monomial[] monomials = getMonomials();
 
