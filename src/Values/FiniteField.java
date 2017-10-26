@@ -3,7 +3,7 @@ package Values;
 /**
  * Authors:
  * Wessel van der Heijden - 0951686
- *
+ * Stefan Tanja - 0955022
  *
  *
  */
@@ -57,6 +57,8 @@ public class FiniteField {
 		//check if operations are allowed
         if (!(b.getModulus().equals(this.getModulus()) && b.getField().equals(this.getField()))) {
 
+            throw new IllegalArgumentException("Elements are not part of the the same finite field");
+
         }
 
         Polynomial g = element.add(b.getElement());
@@ -74,7 +76,7 @@ public class FiniteField {
 		
 		//check if operations are allowed
         if (!(b.getModulus().equals(this.getModulus()) && b.getField().equals(this.getField()))) {
-
+            throw new IllegalArgumentException("Elements are not part of the the same finite field");
         }
 
         Polynomial g = element.multiply(b.getElement());
@@ -91,7 +93,7 @@ public class FiniteField {
 		
 		//check if operations are allowed
         if (!(b.getModulus().equals(this.getModulus()) && b.getField().equals(this.getField()))) {
-
+            throw new IllegalArgumentException("Elements are not part of the the same finite field");
         }
 
         if(b != null) {
@@ -129,7 +131,7 @@ public class FiniteField {
 		
 		//check if operations are allowed
         if (!(b.getModulus().equals(this.getModulus()) && b.getField().equals(this.getField()))) {
-
+            throw new IllegalArgumentException("Elements are not part of the the same finite field");
         }
 
         Polynomial p = b.getElement().euclid(b.getModulus());
