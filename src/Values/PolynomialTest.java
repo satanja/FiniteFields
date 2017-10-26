@@ -234,4 +234,19 @@ class PolynomialTest {
         assertTrue(f.isIrreducible() == expected);
 
     }
+
+    @Test
+    void generateIrreducibleTest() {
+
+        ZmodP one = new ZmodP(1, 2);
+        Monomial monoXcb = new Monomial(one, 3);
+        Monomial[] monos = new Monomial[]{monoXcb};
+        Polynomial f = new Polynomial(monos, new ZmodP(1 , 2));
+        System.out.println(f.generateIrreducible().toString());
+
+    }
+
+    void testGenerateIrreducible() {
+
+    }
 }

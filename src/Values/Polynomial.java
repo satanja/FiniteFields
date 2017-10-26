@@ -191,9 +191,9 @@ public class Polynomial  {
      * @return the degree of this
      */
     public int getDegree(){
-        int deg=0;
+        int deg = 0;
         for(Monomial m : this.monomials){
-            if(m.getExponent() > deg){
+            if(m.getExponent() > deg && m.getCoefficient().getValue() != 0){
                 deg = m.getExponent();
             }
         }
@@ -384,6 +384,7 @@ public class Polynomial  {
             }
 
         }
+
         return new Polynomial(result, this.getField());
 
     }
@@ -479,19 +480,24 @@ public class Polynomial  {
         int deg = this.getDegree();
         Polynomial g;
         Monomial[] monos = new Monomial[deg + 1];
-        ZmodP[] coefs = new ZmodP[deg + 1];
+        ZmodP coef;
         Random rand = new Random();
 
 
         do {
 
-            for (int i = 0; i < deg + 1; i++) {
+            //make a this.getDegree() order monomial
+            coef = new ZmodP(rand.nextInt(F.getP() - 1) + 1, F.getP());
+            monos[deg] = new Monomial(coef, deg);
+
+
+            for (int i = deg - 1; i >= 0; i--) {
 
                 //generate a random coefficient
-                coefs[i] = new ZmodP(rand.nextInt(F.getP()), F.getP());
+                coef = new ZmodP(rand.nextInt(F.getP()), F.getP());
 
                 //get all the monomials for a degree this.getDegree() polynomial
-                monos[i] = new Monomial(coefs[i], i);
+                monos[i] = new Monomial(coef, i);
 
             }
 
