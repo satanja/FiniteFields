@@ -83,7 +83,7 @@ public class ZmodP {
             throw new PValuesNotEqualException("p value should be equal");
         }
 
-        int newValue = (getValue() * b.getValue()) % p; // @todo Replace with a more efficient method.
+        int newValue = getValue() * b.getValue(); // @todo Replace with a more efficient method.
 
         return new ZmodP(newValue, p);
     }

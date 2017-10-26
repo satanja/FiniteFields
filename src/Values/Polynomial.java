@@ -172,15 +172,26 @@ public class Polynomial  {
             // both polynomials have an equal number of monomials
             g = g.sort();
             Polynomial f = this.sort();
+            int j = 0;
             for(int i = 0; i < monomials.length; i++) {
-                if(f.getMonomialAtIndex(i).getExponent() != g.getMonomialAtIndex(i).getExponent()) {
+
+                if(g.getMonomialAtIndex(j).getCoefficient().getValue() == 0) {
+                    j++;
+                }
+
+                if(f.getMonomialAtIndex(i).getCoefficient().getValue() == 0) {
+                    continue;
+                }
+                
+                if(f.getMonomialAtIndex(i).getExponent() != g.getMonomialAtIndex(j).getExponent()) {
                     return false;
                 }
                 //both monomials have the same exponent
-                if(!f.getMonomialAtIndex(i).getCoefficient().equals(g.getMonomialAtIndex(i).getCoefficient())) {
+                if(!f.getMonomialAtIndex(i).getCoefficient().equals(g.getMonomialAtIndex(j).getCoefficient())) {
                     return false;
                 }
                 //both monomials with the same exponent have the same coefficient
+                j++;
             }
             //both polynomials have an equal number of monomials, and for each monomial they are identical.
             if(this.hashCode() != g.hashCode()) {
