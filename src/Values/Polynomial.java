@@ -472,7 +472,7 @@ public class Polynomial  {
             }
 
 
-        } while(h.getDegree() == 0); //a unit returns degree 0, which means the gcd(this, g) = 1
+        } while(h.getDegree() == 0 && t < this.getDegree() + 1); //a unit returns degree 0, which means the gcd(this, g) = 1
         return t == this.getDegree();
     }
 
