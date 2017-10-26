@@ -181,6 +181,7 @@ class PolynomialTest {
     void mod() {
         Polynomial pm4 = new Polynomial(new Monomial[]{ml0,ml1,ml2}, ml0.getCoefficient());
         assertTrue(pl3.multiply(pl3).mod(pm4).equals(pl2));
+        testMod(pl3,pl1,pl3);
     }
 
     void testEqualMod(Polynomial p, Polynomial q, Polynomial mod, boolean expected){

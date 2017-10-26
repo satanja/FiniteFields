@@ -40,7 +40,7 @@ public class Polynomial  {
         return false;
     }
 
-    //TODO: Contract
+
     public Polynomial add(Polynomial g) {
         return add(g,false);
     }
@@ -49,6 +49,16 @@ public class Polynomial  {
         return add(g,true);
     }
 
+    /** Add or subtract two polynomials
+     *
+     * @param g
+     * @param negative
+     * @pre {@code g.getField().getP() == this.getField().getP()} &&
+     * {@code \forall i,j in this with i!=j: i.degree != j.degree} &&
+     * {@code \forall i,j in g with i!=j: i.degree != j.degree}
+     * @throws PValuesNotEqualException if {@code g.getField().getP() != this.getField().getP()}
+     * @return if negative then {@code this-g} else {@code this+g}
+     */
     private Polynomial add(Polynomial g, boolean negative){
         if(g.getField().getP() != this.getField().getP()){
             throw new PValuesNotEqualException("p value should be equal: ("+g.getField().getP()+","+this.getField().getP()+")");
@@ -312,7 +322,11 @@ public class Polynomial  {
             throw new Values.Exceptions.PNotPrimeException("Not equal coefficient primes");
         }
         //Get the remainder from long division
-        return this.longDivision(m).getP2();
+        if(this.getDegree() >= m.getDegree()) {
+            return this.longDivision(m).getP2();
+        } else {
+            return this;
+        }
     }
 
     /**
