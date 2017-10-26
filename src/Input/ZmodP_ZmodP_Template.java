@@ -15,18 +15,18 @@ public abstract class ZmodP_ZmodP_Template implements OperationInterface {
 
     @Override
     public void execute() {
-        System.out.println(input.getOutputPrefix() + "Expects two Values.ZmodP objects a and b as input with equal p.");
-        System.out.println(input.getOutputPrefix() + getReturnDescription());
+        input.printOutput("Expects two Values.ZmodP objects a and b as input with equal p.");
+        input.printOutput(getReturnDescription());
 
         a = input.readZmodP("a");
         b = input.readZmodP("b");
 
         try {
-            System.out.println(input.getOutputPrefix() + computationOutput()); // Print the output is calculation was successfull.
+            input.printOutput(computationOutput()); // Print the output is calculation was successfull.
         } catch (PValuesNotEqualException e) {
-            System.out.println(input.getOutputPrefix() + "FAILED: The p values of both Values.ZmodP objects should be equal.");
+            input.printOutput("FAILED: The p values of both Values.ZmodP objects should be equal.");
         } catch (Exception e) {
-            System.out.println(input.getOutputPrefix() + "FAILED: Computation failed, reason: '" + e.getMessage() + "'");
+            input.printOutput("FAILED: Computation failed, reason: '" + e.getMessage() + "'");
         }
     }
 
@@ -34,7 +34,7 @@ public abstract class ZmodP_ZmodP_Template implements OperationInterface {
 
     @Override
     public String getReturnDescription() {
-        return input.getOutputPrefix() + "Returns a Values.ZmodP value object with value " + getReturnValueDescription();
+        return "Returns a Values.ZmodP value object with value " + getReturnValueDescription();
     }
 
     protected abstract String getReturnValueDescription();

@@ -35,12 +35,12 @@ public class Input {
             throw new IllegalStateException("Input_Scanner.read: scanner should be not null");
         }
 
-        System.out.println(outputPrefix + "First reading the desired operation to be executed");
-        System.out.println(outputPrefix + "Supported operations are:");
+        printOutput("First reading the desired operation to be executed");
+        printOutput("Supported operations are:");
         for (OperationInterface s : operations) {
             System.out.println("\t- '" + s.getCommand() + "'");
         }
-        System.out.println(inputPrefix + "Please enter the desired operation.");
+        printInput("Please enter the desired operation.");
 
         StringBuilder regex = new StringBuilder();
         boolean first = true;
@@ -62,22 +62,22 @@ public class Input {
             try {
                 operation = scanner.next(compile);
             } catch (InputMismatchException e) {
-                System.out.println(inputPrefix + "Operation is not supported, please try again.");
+                printInput("Operation is not supported, please try again.");
                 scanner.nextLine();
             }
         }
 
-        System.out.println(outputPrefix + "Operation selected: [" + operation + "]");
+        printOutput("Operation selected: [" + operation + "]");
 
         executeOperation(operation);
     }
 
-    public String getInputPrefix() {
-        return inputPrefix;
+    public void printInput(String input) {
+        System.out.println(inputPrefix + input);
     }
 
-    public String getOutputPrefix() {
-        return outputPrefix;
+    public void printOutput(String output) {
+        System.out.println(outputPrefix + output);
     }
 
     private void executeOperation(String operation) {
@@ -90,7 +90,7 @@ public class Input {
     }
 
     ZmodP readZmodP(String name) {
-        System.out.println(inputPrefix + "[" + name + "] Please enter a Values.ZmodP value in the format 'Z mod P' with Z an integer and P a prime.");
+        printInput("[" + name + "] Please enter a Values.ZmodP value in the format 'Z mod P' with Z an integer and P a prime.");
 
         Pattern pattern = Pattern.compile("[ 0]*([1-9]\\d*) *[mod]{1,3} *[ 0]*([1-9]\\d*)");
 
@@ -105,7 +105,7 @@ public class Input {
                 if (nextLine.equals("")) {
                     continue;
                 } else if (! matches.matches()) { // Check if the input matches the expected input.
-                    System.out.println(inputPrefix + "Illegal input given, please try again and mind the format.");
+                    printInput("Illegal input given, please try again and mind the format.");
                     continue;
                 }
 
@@ -114,14 +114,14 @@ public class Input {
 
                 return new ZmodP(value, p);
             } catch (PNotPrimeException e) {
-                System.out.println(outputPrefix + "P should be prime, please try again.");
+                printOutput("P should be prime, please try again.");
             }
         } while (true);
     }
 
     Polynomial readPolynomial(String name) {
-        System.out.println(inputPrefix + "[" + name + "] Please enter a Values.Poly value in the format 'c_0 X e_0 + c_1 X e_1 + ... + c_n X e_n mod P' with P as a prime and for all c_i and e_i as integer values, with i from 0 to n.");
-        System.out.println(inputPrefix + "Note: For the input notation can spaces and ones be omitted.");
+        printInput("[" + name + "] Please enter a Values.PolyPoly value in the format 'c_0 X e_0 + c_1 X e_1 + ... + c_n X e_n mod P' with P as a prime and for all c_i and e_i as integer values, with i from 0 to n.");
+        printInput("Note: For the input notation can spaces and ones be omitted.");
 
         Polynomial result = null;
         String firstCheckValidInput = "(?:\\s*(\\d*)(?:\\s*[Xx]\\s*(\\d)*)?)(?:(?:\\s*\\+)(?:\\s*(\\d*)(?:\\s*[Xx]\\s*(\\d*))?)*)*\\s*[mod]{1,3}\\s*(\\d+)";
@@ -135,7 +135,7 @@ public class Input {
 
             // Do some initial checking if the string has things like a "mod {int}" part, no monomials preceding "mod", and so on.
             if (! line.matches(firstCheckValidInput)) {
-                System.out.println(outputPrefix + "Invalid input given, please check if it satisfies the syntax and try again.");
+                printOutput("Invalid input given, please check if it satisfies the syntax and try again.");
                 continue;
             }
 
@@ -148,7 +148,7 @@ public class Input {
             try {
                 mod = stringWithWhitespaceToInt(modDigitAsString);
             } catch (IllegalArgumentException e) {
-                System.out.println(outputPrefix + "Modulo digit not detected, please check your syntax and try again.");
+                printOutput("Modulo digit not detected, please check your syntax and try again.");
                 continue;
             }
 
@@ -196,7 +196,7 @@ public class Input {
 
             // Check if the monomial was read successfully, if not allow the user to retry.
             if (!readMonomialsSuccessful) {
-                System.out.println(outputPrefix + "Something went wrong when reading your polynomial, pleasy check the syntax and try again.");
+                printOutput("Something went wrong when reading your polynomial, pleasy check the syntax and try again.");
                 continue;
             }
 

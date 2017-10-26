@@ -1,5 +1,5 @@
 import Input.Input;
-import Input.Operations.Poly.*;
+import Input.Operations.PolyPoly.*;
 import Input.Operations.ZModP.*;
 
 import java.io.File;

@@ -14,21 +14,21 @@ public abstract class Poly_Poly_Template implements OperationInterface {
 
     @Override
     public void execute() {
-        System.out.println(input.getOutputPrefix() + "Expects two polynomials a and b as input.");
-        System.out.println(input.getOutputPrefix() + getReturnDescription());
+        input.printOutput("Expects two polynomials a and b as input.");
+        input.printOutput(getReturnDescription());
 
         a = input.readPolynomial("a");
 
-        System.out.println(input.getOutputPrefix() + "Successfully read polynomial a, as a = " + a.toString());
+        input.printOutput("Successfully read polynomial a, as a = " + a.toString());
 
         b = input.readPolynomial("b");
 
-        System.out.println(input.getOutputPrefix() + "Successfully read polynomial a, as b = " + a.toString());
+        input.printOutput("Successfully read polynomial a, as b = " + a.toString());
 
         try {
-            System.out.println(input.getOutputPrefix() + computationOutput()); // Print the output is calculation was successful.
+            input.printOutput(computationOutput()); // Print the output is calculation was successful.
         } catch (Exception e) {
-            System.out.println(input.getOutputPrefix() + "FAILED: Computation failed, reason: '" + e.getMessage() + "'");
+            input.printOutput("FAILED: Computation failed, reason: '" + e.getMessage() + "'");
         }
     }
 
