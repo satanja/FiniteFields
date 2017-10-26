@@ -1,6 +1,7 @@
 package Input;
 
 import Values.Exceptions.PNotPrimeException;
+import Values.FiniteField;
 import Values.Monomial;
 import Values.Polynomial;
 import Values.ZmodP;
@@ -292,6 +293,16 @@ public class Input {
         return result;
     }
 
+    FiniteField readField(String name) {
+        printInput("[" + name + "] Please enter the value of the field, it is constructed of two polynomials x and y, and an integer i.");
+
+        Polynomial g = readPolynomial(name + "_x");
+        int field = readInt(name + "_i");
+        Polynomial a = readPolynomial(name + "_y");
+
+        return new FiniteField(g, new ZmodP(0, field), a);
+    }
+
     /**
      * Removes all whitespace from a string and then tries to convert it into an integer.
      *
@@ -310,9 +321,5 @@ public class Input {
         }
 
         return result;
-    }
-
-    void readField(String name) {
-        // Implement this
     }
 }

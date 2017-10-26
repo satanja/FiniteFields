@@ -22,9 +22,4 @@ public class Irreducible extends PolyTemplate {
     public Boolean calculate() {
         return a.isIrreducible();
     }
-
-    @Override
-    public String computationOutput() {
-        return calculate().toString();
-    }
 }

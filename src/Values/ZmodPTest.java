@@ -102,4 +102,19 @@ class ZmodPTest {
 
     }
 
+    @Test
+    void isPrime() {
+        testPrime(2, true);
+        testPrime(3, true);
+        testPrime(4, false);
+        testPrime(5, true);
+        testPrime(6, false);
+        testPrime(11, true);
+        testPrime(51, false);
+    }
+
+    void testPrime(int i, boolean isPrime) {
+        assertEquals(ZmodP.isPrime(i), isPrime);
+    }
+
 }

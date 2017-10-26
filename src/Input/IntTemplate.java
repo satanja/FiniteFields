@@ -1,22 +1,20 @@
 package Input;
 
-import Values.Polynomial;
-
-public abstract class PolyTemplate implements OperationInterface {
+public abstract class IntTemplate implements OperationInterface {
 
     private Input input;
-    protected Polynomial a;
+    protected int a;
 
-    public PolyTemplate(Input input) {
+    public IntTemplate(Input input) {
         this.input = input;
     }
 
     @Override
     public void execute() {
-        input.printOutput("Expects a polynomial a.");
+        input.printOutput("Expects an integer a.");
         input.printOutput(getReturnDescription());
 
-        a = input.readPolynomial("a");
+        a = input.readInt("a");
 
         try {
             input.printOutput(computationOutput()); // Print the output is calculation was successful.

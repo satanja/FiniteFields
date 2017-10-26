@@ -1,22 +1,24 @@
 package Input;
 
-import Values.Polynomial;
+import Values.FiniteField;
 
-public abstract class PolyTemplate implements OperationInterface {
+public abstract class FieldFieldTemplate implements OperationInterface {
 
     private Input input;
-    protected Polynomial a;
+    protected FiniteField a;
+    protected FiniteField b;
 
-    public PolyTemplate(Input input) {
+    public FieldFieldTemplate(Input input) {
         this.input = input;
     }
 
     @Override
     public void execute() {
-        input.printOutput("Expects a polynomial a.");
+        input.printOutput("Expects two fields a and b.");
         input.printOutput(getReturnDescription());
 
-        a = input.readPolynomial("a");
+        a = input.readField("a");
+        a = input.readField("b");
 
         try {
             input.printOutput(computationOutput()); // Print the output is calculation was successful.
@@ -29,7 +31,7 @@ public abstract class PolyTemplate implements OperationInterface {
 
     @Override
     public String getReturnDescription() {
-        return "Returns " + getReturnValueDescription();
+        return getReturnValueDescription();
     }
 
     protected abstract String getReturnValueDescription();
