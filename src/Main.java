@@ -1,6 +1,7 @@
 import Input.Input;
 import Input.Operations.PolyInt.Scalar;
 import Input.Operations.PolyPoly.*;
+import Input.Operations.PolyPolyPoly.EquivalentInMod;
 import Input.Operations.ZmodpZmodp.*;
 
 import java.io.File;
@@ -56,6 +57,7 @@ public class Main {
                 .addOperation(new Scalar(input))
                 .addOperation(new Euclid(input))
                 .addOperation(new EuclidExtended(input))
+                .addOperation(new EquivalentInMod(input))
         ;
 
         input.read();
